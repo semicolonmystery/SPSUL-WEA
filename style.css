@@ -1,0 +1,52 @@
+body {
+    background-color: rgb(65, 65, 65);
+    color: white;
+    font-family: JetBrains Mono;
+}
+.container {
+    display: block;
+    justify-content: center;
+    flex-direction: column;
+    padding: 10px;
+}
+.header > h1 {
+    font-weight: lighter;
+}
+.header {
+    border: 1px solid white;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+.projects {
+    border: 1px solid white;
+    border-radius: 10px;
+    padding: 5px;
+    display: grid;
+    grid-template-columns: repeat( auto-fill, minmax(200px, 1fr) );
+    column-gap: 5px;
+    row-gap: 5px;
+    align-items: center;
+    list-style-type: none;
+}
+.projects > li {
+    grid-column: auto;
+    border: 1px solid white;
+    border-radius: 10px;
+    padding: 0px;
+    text-align: center;
+    background-color: rgba(18, 18, 18, 0.2);
+}
+.projects > li:hover {
+    opacity: 0.5;
+}
+.projects > li > a {
+    margin: 0px;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: white;
+}
