@@ -2,21 +2,28 @@ body {
     background-color: rgb(65, 65, 65);
     color: white;
     font-family: JetBrains Mono;
-}
-.container {
     display: block;
     justify-content: center;
     flex-direction: column;
     padding: 10px;
 }
-.header > h1 {
-    font-weight: lighter;
-}
 .header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border: 1px solid white;
     border-radius: 10px;
     margin-bottom: 30px;
-    text-align: center;
+    padding: 5px;
+}
+.header > img {
+    display: none;
+    width: 5%;
+    height: auto;
+    border-radius: 10px;
+}
+.header > h1 {
+    font-weight: lighter;
 }
 .projects {
     border: 1px solid white;
@@ -29,8 +36,12 @@ body {
     align-items: center;
     list-style-type: none;
 }
+@media (max-width: 200px) {
+    .projects {
+        grid-template-columns: auto;
+    }
+}
 .projects > li {
-    grid-column: auto;
     border: 1px solid white;
     border-radius: 10px;
     padding: 0px;

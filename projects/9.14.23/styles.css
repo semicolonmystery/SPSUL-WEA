@@ -30,19 +30,29 @@ body {
     align-items: center;
     list-style-type: none;
 }
+@media (max-width: 400px) {
+    .flex-list {
+        grid-template-columns: auto;
+    }
+}
 .flex-list > li {
-    grid-column: auto;
     border: 1px solid white;
     border-radius: 10px;
     padding: 10px;
-    text-align: center;
-    background-color: rgba(18, 18, 18, 0.2)
+    background-color: rgba(18, 18, 18, 0.2);
 }
 .flex-list > li:hover {
     opacity: 0.5;
     cursor: pointer;
 }
-.flex-list > li > img {
+.flex-list > li > a {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    text-align: center;
+    color: white;
+}
+.flex-list > li > a > img {
     width: 100%;
     height: auto;
     border-radius: 20px;
