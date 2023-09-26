@@ -38,9 +38,11 @@ body {
     flex-basis: 30%;
     
 }
-.flex-list > li:hover {
-    opacity: 0.5;
-    cursor: pointer;
+@media (min-width: 400px) {
+    .flex-list > li:hover {
+        opacity: 0.5;
+        cursor: pointer;
+    }
 }
 .flex-list > li > a {
     text-decoration: none;
