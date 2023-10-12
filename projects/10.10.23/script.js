@@ -7,6 +7,7 @@ for(var i = 0; i < data.length; i++) {
     addDataToTable(tr, data[i].phone);
     addDataToTable(tr, data[i].birth);
     addDataToTable(tr, data[i].sex);
+    table.appendChild(tr);
 }
 
 function addDataToTable(parent, text) {
