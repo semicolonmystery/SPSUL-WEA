@@ -1,0 +1,31 @@
+body {
+    color: white;
+    font-family: JetBrains Mono;
+    padding: 0;
+    margin: 0;
+    background-image: url("../img/SunnyValley.jpg");
+    background-blend-mode: darken;
+    background-color: rgba(0, 0, 0, 0.7);
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+}
+.dovolena {
+    width: 80%;
+    height: auto;
+    text-align: center;
+    border: 3px solid white;
+    border-radius: 30px;
+    margin-top: 30px;
+    padding: 30px;
+}
+.dovolena > a {
+    text-decoration: underline;
+    color: white;
+}
+.items {
+    text-align: left;
+    display: flex;
+    justify-content: center;
+}
