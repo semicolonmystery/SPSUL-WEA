@@ -1,0 +1,50 @@
+body {
+    font-family: JetBrains Mono;
+    margin: 0px;
+    padding: 10px;
+}
+header {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: rgb(129, 129, 255);
+    padding: 20px;
+    margin-bottom: 40px;
+    border-radius: 20px;
+}
+header > h1 {
+    color: red;
+}
+ul {
+    padding: 0px;
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+a {
+    text-decoration: none;
+    color: white;
+}
+li :hover { color: rgb(255, 140, 0); }
+li { margin: 10px; }
+.section1 {
+    margin-bottom: 40px;
+}
+.section1 > h2 { color: rgb(0, 0, 55); }
+footer {
+    background-color: rgb(40, 40, 40);
+    text-align: center;
+    padding: 15px;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    color: white;
+}
+section {
+    margin-bottom: 50px;
+    border-radius: 20px;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.2);
+}
