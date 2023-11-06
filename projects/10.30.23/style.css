@@ -1,7 +1,15 @@
 body {
     font-family: JetBrains Mono;
     margin: 0px;
-    padding: 10px;
+    padding: 0px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-top: 10px;
+}
+body > * {
+    margin-left: 10px;
+    margin-right: 10px;
 }
 header {
     display: flex;
@@ -9,7 +17,6 @@ header {
     flex-direction: column;
     background-color: rgb(129, 129, 255);
     padding: 20px;
-    margin-bottom: 40px;
     border-radius: 20px;
 }
 header > h1 {
@@ -21,30 +28,32 @@ ul {
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 30px;
 }
 a {
     text-decoration: none;
     color: white;
 }
 li :hover { color: rgb(255, 140, 0); }
-li { margin: 10px; }
-.section1 {
-    margin-bottom: 40px;
-}
 .section1 > h2 { color: rgb(0, 0, 55); }
 footer {
+    position: absolute;
     background-color: rgb(40, 40, 40);
     text-align: center;
     padding: 15px;
-    position: absolute;
     bottom: 0px;
     left: 0px;
     right: 0px;
     color: white;
+    margin: 0px;
 }
 section {
-    margin-bottom: 50px;
     border-radius: 20px;
     padding: 20px;
     background-color: rgba(0, 0, 0, 0.2);
+}
+main {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
