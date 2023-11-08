@@ -16,13 +16,15 @@ async function setAllContent(user, repo, pathToDirectory) {
     const pathArray = pathToDirectory.replace("\\", "/").split("/");
     const parentUrl = `https://api.github.com/repos/${user}/${repo}/git/trees/master`;
 
-    const toSort = [{ index: 1, url: "./", displayname: "./" }];
+    const fileList = [{ index: 1, url: "./", displayname: "./" }];
 
     async function fetchDirectoryData(url) {
         const response = await fetch(url);
         const data = await response.json();
         return data.tree;
     }
+
+    function isBetween(i, from, to) { return i >= from && i <= to; }
 
     let currentList = await fetchDirectoryData(parentUrl);
 
@@ -34,31 +36,40 @@ async function setAllContent(user, repo, pathToDirectory) {
             if (i == pathArray.length-1) {
                 await Promise.all(currentList.map(async directory => {
                     var url = pathToDirectory + "/" + directory.path;
-                    var displayname = fullName ? directory.path : directory.path.substring(directory.path.split(" - ")[0].length + 3);
+                    var displayname = fullName ? directory.path : (directory.path.split(" - ").length >= 2 ? directory.path.substring(directory.path.split(" - ")[0].length + 3) : directory.path);
+                    var strDate = directory.path.split(".");
+                    strDate.slice(0, 3);
+                    if (strDate.length == 3) {
+                        strDate.forEach((item, index) => strDate[index] = item.replace(/[^\d.]/g, ''));
+                        strDate.filter(item => !isNaN(parseInt(item)));
+                        strDate.forEach((item, index) => strDate[index] = parseInt(item));
+                    }
+                    else strDate.forEach((item, index) => strDate[index] = undefined);
+                    var date = (isBetween(strDate[0], 1, 12) && isBetween(strDate[1], 1, 31) && isBetween(strDate[2], 0, 100)) ? new Date(strDate[2]+2000, strDate[0]-1, strDate[1]) : undefined
                     if (directory.type === "tree") {
                         var directoryList = await fetchDirectoryData(directory.url);
                         if (!directoryList.find(file => file.path === "index.html"))
                             url = "?directory=" + pathToDirectory + "/" + directory.path;
                     }
-                    addFileToList(url, displayname);
+                    fileList.push({date: date, url: url, displayname: displayname});
                 }));
             }
         } else changeStatus("There isn't any folder with path: " + pathToDirectory);
     }
-    if (pathArray.length > 1) toSort.push({ index: 1, url: "./?directory=" + pathArray.slice(0, -1).join("/"), displayname: ".." });
-    else toSort.push({ index: 1, url: "./", displayname: ".." });
+    if (pathArray.length > 1) fileList.push({ index: 1, url: "./?directory=" + pathArray.slice(0, -1).join("/"), displayname: ".." });
+    else fileList.push({ index: 1, url: "./", displayname: ".." });
 
-    const sorted = toSort.sort((a, b) => {
+    fileList.sort((a, b) => {
         if (a.index && b.index) return a.index - b.index;
         if (a.index) return -1;
         if (b.index) return 1;
-        if (a.date && b.date) return a.date - b.date;
-        if (a.date) return -1;
-        if (b.date) return 1;
+        if (a.date && b.date) return  b.date - a.date;
+        if (a.date) return 1;
+        if (b.date) return -1;
         return 0;
     });
 
-    sorted.forEach((data) => addFileToList(data.url, data.displayname));
+    fileList.forEach((data) => addFileToList(data.url, data.displayname));
 }
 
 function addFileToList(url, name) {
