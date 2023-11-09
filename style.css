@@ -20,7 +20,7 @@ body {
 .header > h1 {
     font-weight: lighter;
 }
-.projects {
+.files {
     border: 1px solid white;
     border-radius: 10px;
     padding: 5px;
@@ -32,21 +32,21 @@ body {
     list-style-type: none;
 }
 @media (max-width: 200px) {
-    .projects {
+    .files {
         grid-template-columns: auto;
     }
 }
-.projects > li {
+.files > li {
     border: 1px solid white;
     border-radius: 10px;
     padding: 0px;
     text-align: center;
     background-color: rgba(18, 18, 18, 0.2);
 }
-.projects > li:hover {
+.files > li:hover {
     opacity: 0.5;
 }
-.projects > li > a {
+.files > li > a {
     margin: 0px;
     display: flex;
     width: 100%;
