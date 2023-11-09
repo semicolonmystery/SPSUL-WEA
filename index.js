@@ -30,7 +30,8 @@ async function update(url) {
     }
     if (urlParams.get("directory") != null && urlParams.get("directory") != currentDirectory) {
         currentDirectory = "" + removeWrongSlash(urlParams.get("directory"));
-        changeStatus("./" + currentDirectory);
+        if (currentDirectory != defaultDirectory) changeStatus("./" + currentDirectory);
+        else changeStatus("");
     }
     clearList();
     if (!data) data = await loadData();
