@@ -17,6 +17,7 @@ body {
     margin-bottom: 30px;
     padding: 5px;
     text-align: center;
+    line-height: 0.2;
 }
 .header > h1 {
     font-weight: lighter;
