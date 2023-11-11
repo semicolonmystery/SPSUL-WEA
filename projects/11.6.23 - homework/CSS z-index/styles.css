@@ -57,6 +57,17 @@ main > div {
 #flower2 {
     float: right;
 }
+#flower3 {
+    filter: brightness(40%);
+    position: absolute;
+    left: 50%;
+    top: 60%;
+    transform: translate(-50%, -50%);
+    width: 25%;
+    height: auto;
+    z-index: 1;
+    opacity: 0.5;
+}
 .flower-text {
     font-size: 2.1vh;
     transition: 1s;
