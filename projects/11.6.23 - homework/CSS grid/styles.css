@@ -17,9 +17,9 @@ header {
     display: grid;
     justify-content: center;
     align-items: center;
-    padding-top: 10px;
-    line-height: 0.3;
+    padding: 10px;
 }
+header > * { margin: 5px; }
 main {
     padding: 75px;
 }
