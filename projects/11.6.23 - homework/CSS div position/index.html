@@ -5,31 +5,60 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://fonts.googleapis.com/css?family=JetBrains Mono' rel='stylesheet'>
     <link rel="stylesheet" href="styles.css">
-    <title>18.9.23</title>
+    <title>Úkol - CSS div position</title>
 </head>
 <body>
-    <nav class="navbar">
-        <ul>
-            <li href="img/burger.jpg">item</li>
-            <li>item</li>
-            <li>item</li>
-            <li>item</li>
-            <li>item</li>
-        </ul>
-    </nav>
-    <div class="container">
-        <div class="menu">
-            <div class="header">
-                <h1>Můj skvělý seznam jídel</h1>
+    <div class="blue topLeft topMiddle">
+        <div class="red topRightLeft"></div>
+        <div class="green topRightBottom"></div>
+    </div>
+    <div class="blue topRight topMiddle">
+        <div class="red topRightLeft"></div>
+        <div class="green topRightBottom"></div>
+    </div>
+    <div class="blue bottomLeft topMiddle">
+        <div class="red topRightLeft"></div>
+        <div class="green topRightBottom"></div>
+    </div>
+    <div class="blue bottomRight topMiddle">
+        <div class="red topRightLeft"></div>
+        <div class="green topRightBottom"></div>
+    </div>
+    <div class="content">
+        <h1>Pozicování div</h1>
+        <div class="cornerHolder">
+            <div style="transform: scale(1) translate(50%, -50%);" class="blue topMiddle contentCorner">
+                <p id="blue" class="contentCornerText"></p>
+                <div class="red topRightLeft contentCorner"><p id="red" class="contentCornerText"></p></div>
+                <div class="green topRightBottom contentCorner"><p id="green" class="contentCornerText"></p></div>
             </div>
-            <ol class="list">
-                <li>Palačinky se špenátovo-kuřecí směsí</li>
-                <li>Burger</li>
-                <li>Špagety Carbonara</li>
-                <li>Langoš</li>
-                <li>Penne se špenátem a kuřecím masem</li>
-            </ul>
         </div>
     </div>
+    <script>
+        var contentCornerScale = getComputedStyle(document.documentElement).getPropertyValue("--contentCornerScale");
+        var cornerRadius = getComputedStyle(document.documentElement).getPropertyValue("--cornerRadius");
+        document.getElementById("blue").innerHTML = `position: fixed;<br>border-radius: 0 ${cornerRadius} 0 0;<br>background-color: blue;<br>...`
+        document.getElementById("red").innerHTML = `position: absolute;<br>top: 0;<br>right: 100%;<br>border-radius: ${cornerRadius} 0 0 ${cornerRadius};<br>background-color: red;<br>...`
+        document.getElementById("green").innerHTML = `position: absolute;<br>top: 0;<br>right: 100%;<br>border-radius: 0 0 ${cornerRadius} ${cornerRadius};<br>background-color: green;<br>...`
+
+        const divs = document.getElementsByClassName("contentCorner");
+        const texts = document.getElementsByClassName("contentCornerText");
+        const isOverflown = ({ clientHeight, scrollHeight, clientWidth, scrollWidth }) => { return scrollHeight > clientHeight || scrollWidth > clientWidth; };
+        function adjustFontSize() {
+            let i = 1;
+            let overflow = false;
+            const maxSize = 128;
+            while (!overflow && i < maxSize) {
+                texts[1].style.fontSize = `${i}px`;
+                overflow = isOverflown(divs[1]);
+                if (!overflow) i++;
+            }
+            texts[0].style.fontSize = `${i-2}px`;
+            texts[1].style.fontSize = `${i-2}px`;
+            texts[2].style.fontSize = `${i-2}px`;
+        }
+        window.addEventListener('load', adjustFontSize);
+        window.addEventListener('resize', adjustFontSize);
+    </script>
 </body>
 </html>
