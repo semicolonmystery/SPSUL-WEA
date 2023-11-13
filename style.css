@@ -35,6 +35,7 @@ header > h1 { font-weight: lighter; }
     .files {
         grid-template-columns: auto;
     }
+    .files > li:hover { opacity: 1; }
 }
 .files > li {
     border: 1px solid white;
@@ -43,9 +44,7 @@ header > h1 { font-weight: lighter; }
     text-align: center;
     background-color: rgba(18, 18, 18, 0.2);
 }
-.files > li:hover {
-    opacity: 0.5;
-}
+.files > li:hover { opacity: 0.5; }
 .files > li > a {
     margin: 0px;
     display: flex;

@@ -1,0 +1,87 @@
+@import url("https://fonts.googleapis.com/css?family=JetBrains Mono");
+
+body {
+    background-color: rgb(65, 65, 65);
+    color: white;
+    font-family: JetBrains Mono;
+    display: block;
+    text-align: center;
+    margin: 0;
+}
+header {
+    margin-bottom: auto;
+    height: auto;
+    background-color: rgb(73, 73, 73);
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+header > * { margin: 5px; }
+.aboutme {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.social {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}
+.social > div {
+    text-align: center;
+    margin: 5px;
+    padding: 7px;
+    border-radius: 5px;
+    background-color: rgb(0, 0, 186);
+    transition: 1s;
+}
+.social > div:hover {
+    background-color: rgb(0, 0, 100);
+}
+a { color: white; }
+.social > div > a { text-decoration: none; }
+.aboutme > img {
+    height: 250px;
+    width: 250px;
+}
+.projects {
+    margin: 10px;
+    display: grid;
+    grid-template-columns: repeat( auto-fill, minmax(250px, 1fr));
+    column-gap: 5px;
+    row-gap: 5px;
+    align-items: center;
+    list-style-type: none;
+    padding: 0;
+}
+.projects > li {
+    height: 350px;
+    background-image: url("img/default.jpg");
+    background-blend-mode: darken;
+    background-color: rgba(0, 0, 0, 0.7);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    color: white;
+    padding: 15px;
+    border-radius: 20px;
+}
+footer {
+    margin-top: auto;
+    height: 50px;
+    background-color: rgb(73, 73, 73);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+footer > a:hover { color: rgb(217, 217, 217); }
+@media (max-width:330px) {
+    .social { flex-direction: column; }
+    .social > div { width: 75vw; }
+    .social > div:hover { background-color: rgb(0, 0, 186); }
+    .aboutme > img { width: 75vw; height: 75vw; }
+    .projects { grid-template-columns: auto; }
+}

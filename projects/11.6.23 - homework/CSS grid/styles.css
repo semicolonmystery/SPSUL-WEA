@@ -56,6 +56,4 @@ footer {
     justify-content: center;
     align-items: center;
 }
-footer > *:hover {
-    color: rgb(217, 217, 217);
-}
+footer > a:hover { color: rgb(217, 217, 217); }

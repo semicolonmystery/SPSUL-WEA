@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mé portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Mé portfolio</h1>
+    </header>
+    <main>
+        <h2>O mně</h2>
+        <div class="aboutme">
+            <p>Jsem studentem a zájemcem o webové technologie. Rád se učím nové věci a tvořím webové stránky.</p>
+            <img src="img/profile.png" alt="">
+            <div class="social">
+                <div><a href="https://www.facebook.com/poddluk/">Facebook</a></div>
+                <div><a href="https://twitter.com/Verustus_">Twitter</a></div>
+                <div><a href="https://linkedin.com/">Linkedin</a></div>
+            </div>
+        </div>
+        <h1>Projekty</h1>
+        <ul class="projects">
+            <li class="project" style="background-image: url(img/vlhkost.jpg);">
+                <h3 class="projectName">Měřič Teploty a Vlhkosti</h3>
+                <p class="projectText">Můj nedávný projekt spočívá v konstrukci a programování jednoduchého měřiče teploty a vlhkosti pomocí Arduino mikrokontroléru. Cílem bylo vytvořit kompaktní zařízení, které by bylo schopné sledovat aktuální podmínky v místnosti a poskytovat oznámení v případě, že teplota nebo vlhkost překročí nastavená hranice.</p>
+            </li>
+            <li class="project" style="background-image: url(img/arduino.webp);">
+                <h3 class="projectName">Bezdrátový Měřič Příkonu</h3>
+                <p class="projectText">Vytvořil jsem Arduino projekt, který měří elektrický příkon spotřebičů a zobrazuje grafické rozhraní na barevném OLED displeji. Projekt umožňuje uživatelům sledovat energetickou spotřebu zařízení a analyzovat data v reálném čase.</p>
+            </li>
+            <li class="project" style="background-image: url(img/cam.jpg);">
+                <h3 class="projectName">Kamerový Systém s Detekcí Pohybu</h3>
+                <p class="projectText">Postavil jsem bezpečnostní kamerový systém pomocí Raspberry Pi s funkcí detekce pohybu. Systém automaticky zaznamenává videa nebo pořizuje fotografie při detekci pohybu a ukládá je na cloudové úložiště.</p>
+            </li>
+            <li class="project" style="background-image: url(img/reprak.jpg);">
+                <h3 class="projectName">Bluetooth reproduktor s LED Efekty</h3>
+                <p class="projectText">Vytvořil jsem vlastní Bluetooth reproduktor s barevnými LED efekty, které reagují na hudbu. Reproduktor je přenosný a nabízí skvělý zvukový zážitek doplněný vizuálními efekty podle rytmu přehrávané hudby.</p>
+            </li>
+            <li class="project" style="background-image: url(img/zavlaha.jpg);">
+                <h3 class="projectName">Smart Závlažování rostlin</h3>
+                <p class="projectText">Navrhl jsem chytrý závlahový systém s možností programování a ovládání pomocí mobilní aplikace. Projekt využívá Arduino pro monitorování vlhkosti půdy a automatické ovládání závlahy v závislosti na aktuálních podmínkách.</p>
+            </li>
+            <li class="project" style="background-image: url(img/hra.jpg);">
+                <h3 class="projectName">Elektronická Stolní Hra</h3>
+                <p class="projectText">Postavil jsem vlastní elektronickou stolní hru, která je ovládaná pomocí Arduino. Hra obsahuje LED displej, tlačítka a senzory pro interaktivní a zábavný herní zážitek.</p>
+            </li>
+        </ul>
+    </main>
+    <footer>
+        <a href="https://github.com/Verustus/SPSUL-WEA">Github</a>
+        <a href="https://verustus.github.io/SPSUL-WEA">SPSUL-WEA project explorer</a>
+    </footer>
+    <script>
+        const parents = document.getElementsByClassName("project");
+        const texts = document.getElementsByClassName("projectText");
+        const names = document.getElementsByClassName("projectName");
+        const isOverflown = ({ clientHeight, scrollHeight, clientWidth, scrollWidth }) => { return scrollHeight > clientHeight || scrollWidth > clientWidth; };
+        function adjustFontSize() {
+            let smallest = 128;
+            Array.from(parents).forEach((item, index) => {
+                let i = 1;
+                let overflow = false;
+                const maxSize = 128;
+                while (!overflow && i < maxSize) {
+                    texts[index].style.fontSize = `${i}px`;
+                    overflow = isOverflown(item);
+                    if (!overflow) i++;
+                }
+                if (i < smallest) smallest = i;
+            });
+            Array.from(parents).forEach((item, index) => {
+                texts[index].style.fontSize = `${smallest-2}px`;
+                names[index].style.fontSize = `${smallest+2}px`;
+            });
+        }
+        window.addEventListener('load', adjustFontSize);
+        window.addEventListener('resize', adjustFontSize);
+    </script>
+</body>
+</html>
