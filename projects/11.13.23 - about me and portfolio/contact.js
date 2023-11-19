@@ -1,14 +1,7 @@
-function textAreaUpdate() {
-    const aboutmeText = document.getElementById("aboutmeText");
-}
 function sendEmail() {
-	Email.send({
-    SecureToken : "<your generated token>",
-    To : 'recipient@example.com',
-    From : "sender@example.com",
-    Subject : "Test Email",
-    Body : "<html><h2>Header</h2><strong>Bold text</strong><br></br><em>Italic</em></html>"
-    }).then(
-        message => alert("mail sent successfully")
-    );
+	const firstName = document.contactMeForm.firstName.value;
+	const lastName = document.contactMeForm.lastName.value;
+	const email = document.contactMeForm.email.value;
+	const password = document.contactMeForm.password.value;
+    console.log(firstName);
 }
