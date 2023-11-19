@@ -17,7 +17,7 @@ header {
     align-items: center;
     padding: 10px;
 }
-header > * { margin: 5px; }
+header > h1 { margin: 5px; font-size: 45px; }
 .aboutme {
     display: flex;
     flex-direction: column;
@@ -30,10 +30,11 @@ header > * { margin: 5px; }
     flex-direction: row;
 }
 .social > div {
+    font-size: 25px;
     text-align: center;
     margin: 5px;
     padding: 7px;
-    border-radius: 5px;
+    border-radius: 1vw;
     background-color: rgb(0, 0, 186);
     transition: 1s;
 }
@@ -43,15 +44,21 @@ header > * { margin: 5px; }
 a { color: white; }
 .social > div > a { text-decoration: none; }
 .aboutme > img {
+    margin: 20px;
     height: 250px;
     width: 250px;
+}
+.aboutmeTextHolder {
+    width: 80%;
+    height: 300px;
+    text-align: justify;
 }
 .projects {
     margin: 10px;
     display: grid;
-    grid-template-columns: repeat( auto-fill, minmax(250px, 1fr));
-    column-gap: 5px;
-    row-gap: 5px;
+    grid-template-columns: repeat( auto-fill, minmax(300px, 1fr));
+    column-gap: 10px;
+    row-gap: 10px;
     align-items: center;
     list-style-type: none;
     padding: 0;
@@ -69,14 +76,10 @@ a { color: white; }
     border-radius: 20px;
 }
 .projectText { text-align: left; }
-.aboutmeTextHolder {
-    width: 80%;
-    height: 300px;
-    text-align: justify;
-}
 footer {
     margin-top: auto;
-    height: 50px;
+    height: auto;
+    padding: 10px;
     background-color: rgb(73, 73, 73);
     display: flex;
     flex-direction: column;
@@ -84,9 +87,9 @@ footer {
     align-items: center;
 }
 footer > a:hover { color: rgb(217, 217, 217); }
-@media (max-width:330px) {
+@media (max-width: 600px) {
     .social { flex-direction: column; }
-    .social > div { width: 75vw; }
+    .social > div { width: 75vw; font-size: 30px; border-radius: 10px; }
     .social > div:hover { background-color: rgb(0, 0, 186); }
     .aboutme > img { width: 75vw; height: 75vw; }
     .projects { grid-template-columns: auto; }
