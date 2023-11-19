@@ -11,8 +11,8 @@
         <h1>Mé portfolio</h1>
     </header>
     <main>
-        <h2>O mně</h2>
         <div class="aboutme">
+            <h2>O mně</h2>
             <div class="aboutmeTextHolder"><p id="aboutmeText">Jsem programátor studující na Střední průmyslové škole v Ústí nad Labem na adrese Resslova 5. V současné době se zaměřuji na tvorbu projektů s využitím Arduino, Raspberry Pi a 3D tiskárny Geetech A20t. Mým cílem je zdokonalovat své dovednosti v programování a hardwarovém inženýrství prostřednictvím praktických projektů. V rámci mého studia jsem se intenzivně věnoval programování v jazyce C a jeho aplikacím v oblasti vestavěných systémů. Pracoval jsem na projektech s Arduino, což mi umožnilo lépe porozumět principům mikrokontrolérů a jejich integraci do elektronických zařízení. Dále jsem se zabýval vývojem projektů s Raspberry Pi, kde jsem se naučil využívat možnosti tohoto jednodeskového počítače pro různé účely, jako například domácí automatizaci nebo vývoj softwarových aplikací. Mým dalším zájmem je práce s 3D tiskárnou Geetech A20t. S touto tiskárnou jsem vytvářel tříbarevné a vícebarevné tisky, což poskytuje široké možnosti pro design a výrobu prototypů. Prostřednictvím tohoto procesu jsem získal hlubší porozumění 3D modelování a tisku. Celkově se snažím spojit teoretické znalosti získané ve škole s praktickými zkušenostmi prostřednictvím vlastních projektů, abych se co nejlépe připravil na profesionální kariéru v oblasti programování a technického designu.</p></div>
             <img src="img/profile.png" alt="">
             <div class="social">
@@ -49,49 +49,37 @@
                 <p class="projectText">Postavil jsem vlastní elektronickou stolní hru, která je ovládaná pomocí Arduino. Hra obsahuje LED displej, tlačítka a senzory pro interaktivní a zábavný herní zážitek.</p>
             </li>
         </ul>
+        <h2>Kontaktuj Mě</h2>
+        <form action="#" class="contactMe">
+            <table>
+                <tr>
+                    <td><label for="firstName">Křestné jméno:</label></td>
+                    <td><input type="text" name="firstName" id="firstName"></td>
+                </tr>
+                <tr>
+                    <td><label for="lastName">Příjmení:</label></td>
+                    <td><input type="text" name="lastName" id="lastName"></td>
+                </tr>
+                <tr>
+                    <td><label for="email">Email:</label></td>
+                    <td><input type="text" name="email" id="email" autocomplete="off"></td>
+                </tr>
+                <tr>
+                    <td><label for="password">Heslo:</label></td>
+                    <td><input type="password" name="password" id="password"></td>
+                </tr>
+                <tr><td class="contantMeCenter" colspan="2"><label for="content">Obsah:</label></td></tr>
+                <tr><td colspan="2"><textarea class="contantMeContent" name="content" id="content"></textarea></td></tr>
+                <tr><td class="contantMeCenter" colspan="2"><input type="submit" value="Odeslat"></td></tr>
+            </table>
+        </form>
     </main>
     <footer>
         <a href="https://github.com/Verustus/SPSUL-WEA">Github</a>
         <a href="https://verustus.github.io/SPSUL-WEA">SPSUL-WEA project explorer</a>
     </footer>
-    <script>
-        const isOverflown = ({ clientHeight, scrollHeight, clientWidth, scrollWidth }) => { return scrollHeight > clientHeight || scrollWidth > clientWidth; };
-        function getFontSize(parent, text) {
-            let i = 1;
-            let overflow = false;
-            const maxSize = 128;
-            while (!overflow && i < maxSize) {
-                text.style.fontSize = `${i}px`;
-                overflow = isOverflown(parent);
-                if (!overflow) i += 0.5;
-            }
-            return i;
-        }
-        
-        const aboutmeTextHolder = document.getElementsByClassName("aboutmeTextHolder")[0];
-        const aboutmeText = document.getElementById("aboutmeText");
-        const minAboutMeTextHolderHeight = 300;
-        const maxAboutMeTextHolderHeight = 600;
-        const projects = document.getElementsByClassName("project");
-        const projectTexts = document.getElementsByClassName("projectText");
-        const projectNames = document.getElementsByClassName("projectName");
-        function adjustSizes() {
-            let smallest = 128;
-            Array.from(projects).forEach((item, index) => {
-                var i = getFontSize(item, projectTexts[index])
-                if (i < smallest) smallest = i;
-            });
-            const heightDifference = window.innerWidth - window.innerHeight;
-            const aboutTextHolderHeight = Math.max(minAboutMeTextHolderHeight, Math.min(maxAboutMeTextHolderHeight, maxAboutMeTextHolderHeight - heightDifference));
-            aboutmeTextHolder.style.height = `${aboutTextHolderHeight}px`;
-            Array.from(projects).forEach((item, index) => {
-                projectTexts[index].style.fontSize = `${smallest-2}px`;
-                projectNames[index].style.fontSize = `${smallest+2}px`;
-            });
-            aboutmeText.style.fontSize = `${getFontSize(aboutmeTextHolder, aboutmeText)-0.5}px`;
-        }
-        window.addEventListener('load', adjustSizes);
-        window.addEventListener('resize', adjustSizes);
-    </script>
+    <script src="size.js"></script>
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
+    <script src="contact.js"></script>
 </body>
 </html>
