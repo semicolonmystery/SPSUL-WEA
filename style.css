@@ -1,13 +1,15 @@
 body {
+    display: flex;
     background-color: rgb(65, 65, 65);
     color: white;
     font-family: JetBrains Mono;
-    display: block;
     justify-content: center;
+    align-items: center;
     flex-direction: column;
     padding: 10px;
 }
 header {
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -20,14 +22,22 @@ header {
 }
 header > * { margin: 5px; }
 header > h1 { font-weight: lighter; }
+button {
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+}
+button:hover { background-color: rgb(201, 201, 201); }
+button:active { background-color: rgb(139, 139, 139); }
 .files {
+    width: 100%;
     border: 1px solid white;
     border-radius: 10px;
-    padding: 5px;
+    padding: 10px 5px;
     display: grid;
     grid-template-columns: repeat( auto-fill, minmax(200px, 1fr) );
     column-gap: 5px;
-    row-gap: 5px;
+    row-gap: 10px;
     align-items: center;
     list-style-type: none;
 }
@@ -38,9 +48,10 @@ header > h1 { font-weight: lighter; }
     .files > li:hover { opacity: 1; }
 }
 .files > li {
+    height: 100%;
     border: 1px solid white;
     border-radius: 10px;
-    padding: 0px;
+    padding: 2px;
     text-align: center;
     background-color: rgba(18, 18, 18, 0.2);
 }
