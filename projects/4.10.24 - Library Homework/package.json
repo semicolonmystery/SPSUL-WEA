@@ -1,0 +1,14 @@
+{
+  "name": "4.10.24---library-homework",
+  "version": "1.0.0",
+  "description": "Homework for book library",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "author": "Verustus",
+  "license": "ISC",
+  "dependencies": {
+    "sqlite3": "^5.1.7"
+  }
+}

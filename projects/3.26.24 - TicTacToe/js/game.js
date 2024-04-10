@@ -5,7 +5,7 @@ import * as START from "./gameStart.js";
 const renderer = new THREE.WebGLRenderer();
 
 export const scene = new THREE.Scene();
-export const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+export const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
@@ -28,3 +28,4 @@ function animate(timestamp) {
 }
 
 animate();
+START.start();
