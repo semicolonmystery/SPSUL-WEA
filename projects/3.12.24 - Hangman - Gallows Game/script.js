@@ -2,6 +2,7 @@ let previousWords = [];
 let currentWord;
 let dashedWord;
 let errors;
+let deaths;
 let difficulty = 1;
 let lock = true;
 let fill = true;
@@ -11,7 +12,22 @@ const lettersEl = document.getElementById("letters");
 const statusEl = document.getElementById("status");
 const guessingEl = document.getElementById("guessing");
 
-newGame();
+loadPage();
+
+function loadPage() {
+    let deaths = getCookie("deaths");
+    if (deaths == null) {
+        setCookie("deaths", 0+"");
+        deaths = 0;
+    }
+    updateDeaths();
+    
+    newGame();
+}
+
+function updateDeaths() {
+    document.getElementById("deaths").innerText = deaths;
+}
 
 function newGame() {
     setDeathStage(0);
@@ -128,6 +144,9 @@ function lose() {
     statusEl.innerHTML = "You lost!!!";
     statusEl.style.opacity = 1;
     lock = true;
+
+    setCookie("deaths", ++deaths);
+    updateDeaths();
 }
 
 function setDeathStage(num) {
