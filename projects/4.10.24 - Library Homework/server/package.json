@@ -2,13 +2,19 @@
   "name": "4.10.24---library-homework",
   "version": "1.0.0",
   "description": "Homework for book library",
-  "main": "index.js",
+  "main": "./dist/server",
+  "types": "./dist/server",
   "scripts": {
-    "test": "node index.js"
+    "clean": "rimraf dist",
+    "dev": "npm run clean & tsc & node dist"
   },
   "author": "Verustus",
   "license": "ISC",
   "dependencies": {
+    "@types/node": "^20.12.7",
     "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5"
   }
 }
