@@ -1,40 +1,63 @@
-type Book = {
-    id: number;
+import { LibraryDB } from "./db.js";
+
+export type Book = {
+    id?: number;
     name: string;
     author: string;
     publication: Date;
     description: string;
     pngBlob: any;
+    update?: boolean;
 };
 
-type ClientSession = {
-    clientSecret: string;
+export type ClientSession = {
     clientId: string;
+    clientSecret: string;
+    expiration: Date;
 }
-type User = {
-    id: number;
+export type User = {
+    id?: number;
     firstname: string;
     surname: string;
     email: string;
     borrowedBooks?: Book[];
-    openSessions: ClientSession[];
+    openSessions?: ClientSession[];
+    hashedPassword: string;
+    update?: boolean;
 };
 
-type BookBorrow = {
+export type BookBorrow = {
     bookId: number;
     userId: number;
     endDate: Date;
 };
 
-class Library {
-    books: Map<number, Book>;
-    users: Map<number, User>;
-    borrowedBooks: Map<number, BookBorrow>;
+// vím že je to nesmislné ukládat do ramky ale podle zadání to dává nejvíce smysl
+// je to neefektivní a pomalí
+export class Library {
+    private books: Map<number, Book>;
+    private users: Map<number, User>;
+    private bookBorrows: Map<number, BookBorrow>;
+    private db: LibraryDB;
 
-    constructor(books: Map<number, Book> = new Map(), users: Map<number, User> = new Map(), borrowedBooks: Map<number, BookBorrow> = new Map()) {
-        this.books = books;
-        this.users = users;
-        this.borrowedBooks = borrowedBooks;
+    constructor(loadFrom: string = "library.db") {
+        this.db = new LibraryDB(loadFrom);
+        this.db.setup();
+
+        this.books = this.arrayToMap(this.db.getBooks());
+        this.users = this.arrayToMap(this.db.getUsers());
+        this.bookBorrows = this.arrayToMap(this.db.getBookBorrows());
+    }
+
+    private arrayToMap<T extends object>(array: T[]): Map<number, T> {
+        const map = new Map<number, T>();
+
+        for (const element of array) {
+            if ("id" in element) map.set((element as any).id, element);
+            else if ("userId" in element) map.set((element as any).userId, element);
+        }
+
+        return map;
     }
 
     addBook(book: Book) {
@@ -44,9 +67,37 @@ class Library {
         this.users.set(user.id, user);
     }
     borrowBook(bookId: number, userId: number, endDate: Date) {
-        this.borrowedBooks.set(bookId, { bookId, userId, endDate });
+        this.bookBorrows.set(bookId, { bookId, userId, endDate });
     }
     returnBook(bookId: number) {
-        this.borrowedBooks.delete(bookId);
+        this.bookBorrows.delete(bookId);
+    }
+
+    getBooks(): Book[] { return Array.from(this.books.values()); }
+    getBook(id: number): Book { return this.books.get(id); }
+
+    getUsers(): User[] { return Array.from(this.users.values()); }
+    getUser(id: number): User { return this.users.get(id); }
+
+    getBookBorrows(userId?: number): BookBorrow[] {
+        if (typeof userId !== "undefined") {
+            let bookBorrows = [];
+            Array.from(this.bookBorrows.values()).forEach(bookBorrow => {
+                if (bookBorrow.userId == userId)
+                    bookBorrows.push(bookBorrow);
+            });
+    
+            return bookBorrows;
+        }
+        return Array.from(this.bookBorrows.values());
+    }
+
+    save() {
+        this.users = this.arrayToMap(this.db.addUsers(this.getUsers()));
+        this.books = this.arrayToMap(this.db.addBooks(this.getBooks()));
+    }
+    close() {
+        this.save();
+        this.db.close();
     }
 }
