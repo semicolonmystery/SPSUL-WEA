@@ -1,4 +1,5 @@
 import { LibraryDB } from "./db.js";
+import { findNextNumber } from "./utils.js";
 
 export type Book = {
     id?: number;
@@ -17,6 +18,7 @@ export type ClientSession = {
 }
 export type User = {
     id?: number;
+    username: string;
     firstname: string;
     surname: string;
     email: string;
@@ -38,12 +40,13 @@ export class Library {
     private books: Map<number, Book>;
     private users: Map<number, User>;
     private bookBorrows: Map<number, BookBorrow>;
-    private db: LibraryDB;
+    public db: LibraryDB;
 
     constructor(loadFrom: string = "library.db") {
         this.db = new LibraryDB(loadFrom);
         this.db.setup();
 
+        console.log(this.db.getBooks());
         this.books = this.arrayToMap(this.db.getBooks());
         this.users = this.arrayToMap(this.db.getUsers());
         this.bookBorrows = this.arrayToMap(this.db.getBookBorrows());
@@ -61,10 +64,10 @@ export class Library {
     }
 
     addBook(book: Book) {
-        this.books.set(book.id, book);
+        this.books.set(typeof book.id !== "undefined" ? book.id : findNextNumber(Array.from(this.books.keys())), book);
     }
     addUser(user: User) {
-        this.users.set(user.id, user);
+        this.users.set(typeof user.id !== "undefined" ? user.id : findNextNumber(Array.from(this.users.keys())), user);
     }
     borrowBook(bookId: number, userId: number, endDate: Date) {
         this.bookBorrows.set(bookId, { bookId, userId, endDate });

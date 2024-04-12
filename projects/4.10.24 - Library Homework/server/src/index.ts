@@ -1,6 +1,7 @@
 import { createServer } from "http";
-import { Library, Book } from "./data.js";
-/*
+import { Library } from "./data.js";
+import { hashPassword } from "./utils.js";
+
 const hostname = '127.0.0.1';
 const port = 3000;
 const server = createServer((req, res) => {
@@ -19,25 +20,21 @@ const server = createServer((req, res) => {
 });
 server.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);
-});*/
+});
 
 let lib = new Library();
 
-String.prototype["hashCode"] = function() {
-    var hash = 0,
-      i, chr;
-    if (this.length === 0) return hash;
-    for (i = 0; i < this.length; i++) {
-      chr = this.charCodeAt(i);
-      hash = ((hash << 5) - hash) + chr;
-      hash |= 0; // Convert to 32bit integer
-    }
-    return hash;
-}
-
 console.log(lib.getBooks());
 lib.addBook({name: "Test", author: "author", publication: new Date(), description: "none", pngBlob: ""});
-lib.addUser({firstname: "Pepa", surname: "Splaška", email: "splaska@email.cz", hashedPassword: ("splaska123" as any).hashCode()});
-console.log(lib.getBooks());
+hashPassword("splaska123").then(function(result) {
+    lib.addUser({username: "Pepiksplasik", firstname: "Pepa", surname: "Splaška", email: "splaska@email.cz", hashedPassword: result});
+    console.log(lib.getBooks());
+    console.log(lib.getUsers());
+});
+
+/*lib.db.db.all("SELECT rowid AS id, name FROM books", (err, rows) => {
+    console.log(rows);
+});*/
+
 lib.save();
 lib.close();

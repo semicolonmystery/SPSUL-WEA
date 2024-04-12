@@ -12,10 +12,12 @@ export class LibraryDB {
         this.db.exec(`
             CREATE TABLE IF NOT EXISTS users (
                 id INTEGER PRIMARY KEY,
+                username TEXT,
                 firstname TEXT,
                 surname TEXT,
                 email TEXT,
-                hashedPassword TEXT
+                hashedPassword TEXT,
+                UNIQUE(username, email) ON CONFLICT IGNORE
             );
             
             CREATE TABLE IF NOT EXISTS books (
@@ -29,7 +31,7 @@ export class LibraryDB {
 
             CREATE TABLE IF NOT EXISTS bookBorrows (
                 bookId INTEGER,
-                userId INTEGER,
+                userId INTEGER UNIQUE,
                 endDate DATE,
                 FOREIGN KEY (bookId) REFERENCES books(id),
                 FOREIGN KEY (userId) REFERENCES users(id)
@@ -47,14 +49,15 @@ export class LibraryDB {
     }
 
     addUsers(users: User | User[]): User[] {
+        const self = this;
         let usersOut: User[] = [];
 
         if (!Array.isArray(users)) users = [users];
-        const stmt = this.db.prepare('INSERT INTO users (firstname, surname, email) VALUES (?, ?, ?, ?)');
+        const stmt = this.db.prepare("INSERT INTO users (username, firstname, surname, email, hashedPassword) VALUES (?, ?, ?, ?, ?)");
         for (const u of users) {
             if (u.update || typeof u.update === "undefined") {
-                stmt.run(u.firstname, u.surname, u.email, {}, function (err) {
-                    if (this.checkError(err)) return;
+                stmt.run(u.username, u.firstname, u.surname, u.email, u.hashedPassword, function (err) {
+                    if (self.checkError(err)) return;
                     if (!u.id) u.id = this.lastId;
                     usersOut.push(u);
                 });
@@ -66,14 +69,15 @@ export class LibraryDB {
     }
 
     addBooks(books: Book | Book[]): Book[] {
+        const self = this;
         let booksOut: Book[] = [];
         
         if (!Array.isArray(books)) books = [books];
-        const stmt = this.db.prepare('INSERT INTO books (name, author, publication, description, pngBlob) VALUES (?, ?, ?, ?, ?, ?)');
+        const stmt = this.db.prepare("INSERT INTO books (name, author, publication, description, pngBlob) VALUES (?, ?, ?, ?, ?)");
         for (const b of books) {
             if (b.update || typeof b.update === "undefined") {
-                stmt.run(b.id, b.name, b.author, b.publication.toISOString(), b.description, b.pngBlob, {}, function (err) {
-                    if (this.checkError(err)) return;
+                stmt.run(b.name, b.author, b.publication.toISOString(), b.description, b.pngBlob, function (err) {
+                    if (self.checkError(err)) return;
                     if (!b.id) b.id = this.lastId;
                     booksOut.push(b);
                 });
@@ -86,37 +90,40 @@ export class LibraryDB {
     }
 
     borrowBooks(bookBorrow: BookBorrow) {
-        this.db.run('INSERT INTO bookBorrows (bookId, userId, endDate) VALUES (?, ?, ?)', bookBorrow.bookId, bookBorrow.userId, bookBorrow.endDate.toISOString(), (err) => {
+        this.db.run("INSERT INTO bookBorrows (bookId, userId, endDate) VALUES (?, ?, ?)", bookBorrow.bookId, bookBorrow.userId, bookBorrow.endDate.toISOString(), (err) => {
             if (this.checkError(err)) return;
         });
     }
 
     returnBook(bookId: number) {
-        this.db.run('DELETE FROM bookBorrows WHERE bookId = ?', bookId);
+        this.db.run("DELETE FROM bookBorrows WHERE bookId = ?", bookId);
     }
 
-    getBook(bookId: number): Promise<Book | undefined> {
-        return this.db.get('SELECT * FROM books WHERE id = ?', bookId) as any;
+    getBook(bookId: number): Book {
+        return this.db.get("SELECT * FROM books WHERE id = ?", bookId) as any;
     }
 
-    getBooks(): Book[] | undefined {
-        this.db.all('SELECT * FROM books', (err, rows) => {
+    getBooks(): Book[] {
+        let r: any[] = [];
+        this.db.all("SELECT rowid AS id, name, author, publication, description, pngBlob FROM books", (err, rows) => {
             if (this.checkError(err)) return;
-            return rows;
+            r = rows;
         });
-        return [];
+        r.forEach(book => book.date = new Date(book.date));
+        return r;
     }
 
     getUsers(): User[] {
-        this.db.all('SELECT * FROM users', (err, rows) => {
+        let r = [];
+        this.db.all("SELECT rowid AS id, username, firstname, surname, email, hashedPassword FROM users", (err, rows) => {
             if (this.checkError(err)) return;
-            return rows;
+            r = rows;
         });
-        return [];
+        return r;
     }
 
     getBookBorrows(): BookBorrow[] {
-        this.db.all('SELECT * FROM bookBorrows', (err, rows) => {
+        this.db.all("SELECT * FROM bookBorrows", (err, rows) => {
             if (this.checkError(err)) return;
             return rows;
         });
@@ -124,16 +131,16 @@ export class LibraryDB {
     }
 
     getSession(userId: number): Promise<ClientSession | undefined> {
-        return this.db.get('SELECT * FROM clientSessions WHERE userId = ?', userId) as any;
+        return this.db.get("SELECT * FROM clientSessions WHERE userId = ?", userId) as any;
     }
 
     removeSession(userId: number) {
-        this.db.run('DELETE FROM clientSessions WHERE userId = ?', userId);
+        this.db.run("DELETE FROM clientSessions WHERE userId = ?", userId);
     }
 
     private generateRandomString(length: number): string {
-        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        let result = '';
+        const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        let result = "";
         for (let i = 0; i < length; i++) {
             result += characters.charAt(Math.floor(Math.random() * characters.length));
         }
@@ -144,7 +151,7 @@ export class LibraryDB {
         let clientId;
         do {
             clientId = this.generateRandomString(16);
-        } while ((this.db.get('SELECT COUNT(*) as count FROM clientSessions WHERE clientId = ?', clientId) as any).count > 0);
+        } while ((this.db.get("SELECT COUNT(*) as count FROM clientSessions WHERE clientId = ?", clientId) as any).count > 0);
         return clientId;
     }
 
@@ -152,22 +159,22 @@ export class LibraryDB {
         let clientSecret;
         do {
             clientSecret = this.generateRandomString(32);
-        } while ((this.db.get('SELECT COUNT(*) as count FROM clientSessions WHERE clientSecret = ?', clientSecret) as any).count > 0);
+        } while ((this.db.get("SELECT COUNT(*) as count FROM clientSessions WHERE clientSecret = ?", clientSecret) as any).count > 0);
         return clientSecret;
     }
 
     addSession(userId: number, session: ClientSession) {
         const clientId = this.generateUniqueClientId();
         const clientSecret = this.generateUniqueClientSecret();
-        const stmt = this.db.prepare('INSERT INTO clientSessions (userId, clientSecret, clientId, expiration) VALUES (?, ?, ?, ?)');
+        const stmt = this.db.prepare("INSERT INTO clientSessions (userId, clientSecret, clientId, expiration) VALUES (?, ?, ?, ?)");
         stmt.run(userId, clientSecret, clientId, session.expiration.toISOString());
         stmt.finalize();
         return { clientId, clientSecret };
     }
 
-    private checkError(err: Error) {
+    private checkError(err: Error): boolean {
         if (err) { console.log(err.message); }
-        return typeof err !== "undefined";
+        return typeof err === "undefined";
     }
 
     close() { this.db.close(); }
