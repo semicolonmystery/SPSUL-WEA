@@ -1,51 +1,100 @@
 import "./Card.js";
 
+let size = 4;
 const LANGS = [
+    "Android",
     "Angular",
+    "Apple",
+    "Bootstrap",
     "C",
-    "CSharp",
     "C++",
+    "ChatGPT",
+    "C Sharp",
+    "CSS",
+    "Discord",
+    "Git",
+    "GitHub",
     "GoLang",
     "HTML",
+    "iOS",
     "Java",
     "JavaScript",
     "jQuery",
     "Kotlin",
     "Lua",
+    "MATLAB",
+    "Microsoft",
+    "NodeJS",
+    "Perl",
     "PHP",
     "Python",
-    "RLang",
+    "React",
+    "R-Lang",
+    "React",
     "Ruby",
     "Rust",
     "Scala",
     "Swift",
-    "TypeScript"
-]
+    "Tailwind CSS",
+    "TypeScript",
+    "ViteJS",
+    "WebAssembly",
+    "Windows 11"
+];
 
-Array.prototype.shuffle = function () {
+Array.prototype.shuffle = function() {
     for (let i = this.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [this[i], this[j]] = [this[j], this[i]];
+        const J = Math.floor(Math.random() * (i + 1));
+        [this[i], this[J]] = [this[J], this[i]];
     }
     return this;
-}
+};
+HTMLDivElement.prototype.getFirstChildOfType = function(childType) {
+    for (let i = 0; i < this.children.length; i++) {
+        if (this.children[i].tagName.toLowerCase() === childType.toLowerCase())
+            return this.children[i];
+    }
+    
+    return null;
+};
+document.getElementById("size").getFirstChildOfType("input").addEventListener("input", changeSize);
+document.getElementById("reset").addEventListener("click", newGame);
 
-prepareGame();
+newGame();
 
-export function prepareGame() {
-    const PEXESO_ELEMENT = document.getElementsByClassName("pexeso")[0];
+export function newGame() {
+    const PEXESO_ELEMENT = document.getElementById("pexeso");
+    PEXESO_ELEMENT.classList = [`pex${size}`];
+    PEXESO_ELEMENT.innerHTML = "";
+
     let pexesoList = [];
     let langs = [...LANGS];
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < (size*size)/2; i++) {
         const LANG = langs.splice(Math.floor(Math.random() * langs.length), 1);
-        let cardElement = `<div class="card"><img src="imgs/${LANG}.svg"></div>`;
+        let cardElement = document.createElement("div");
+        cardElement.innerHTML = `<img src="imgs/${LANG}.svg" onerror="onImgError(this)">`;
+        cardElement.classList.add("card");
 
         pexesoList.push(cardElement);
-        pexesoList.push(cardElement);
+        pexesoList.push(cardElement.cloneNode(true));
     }
     pexesoList.shuffle();
 
     for (const CARD_EL of pexesoList) {
-        PEXESO_ELEMENT.innerHTML += CARD_EL;
+        PEXESO_ELEMENT.appendChild(CARD_EL);
     }
+}
+
+window.onImgError = function onImgError(img) {
+    img.src = "imgs/404 Error.svg";
+}
+
+export function changeSize() {
+    const SIZE_DIV = document.getElementById("size");
+    const SIZE = parseInt(SIZE_DIV.getFirstChildOfType("input").value);
+    const SIZE_TEXT = SIZE_DIV.getFirstChildOfType("p");
+    SIZE_TEXT.innerText  = SIZE*2;
+    size = SIZE*2;
+
+    newGame();
 }
