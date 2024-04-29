@@ -1,6 +1,6 @@
 import { createServer } from "http";
 import { Library } from "./data.js";
-import { hashPassword } from "./utils.js";
+import { hashSync } from "bcrypt";
 
 const hostname = '127.0.0.1';
 const port = 3000;
@@ -23,18 +23,13 @@ server.listen(port, hostname, () => {
 });
 
 let lib = new Library();
-
+    
 console.log(lib.getBooks());
 lib.addBook({name: "Test", author: "author", publication: new Date(), description: "none", pngBlob: ""});
-hashPassword("splaska123").then(function(result) {
-    lib.addUser({username: "Pepiksplasik", firstname: "Pepa", surname: "Splaška", email: "splaska@email.cz", hashedPassword: result});
-    console.log(lib.getBooks());
-    console.log(lib.getUsers());
-});
 
-/*lib.db.db.all("SELECT rowid AS id, name FROM books", (err, rows) => {
-    console.log(rows);
-});*/
+lib.addUser({username: "Pepiksplasik", firstname: "Pepa", surname: "Splaška", email: "splaska@email.cz", hashedPassword: hashSync("splaska123")});
+console.log(lib.getBooks());
+console.log(lib.getUsers());
 
 lib.save();
 lib.close();

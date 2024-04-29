@@ -1,5 +1,4 @@
 import { LibraryDB } from "./db.js";
-import { findNextNumber } from "./utils.js";
 
 export type Book = {
     id?: number;
@@ -38,18 +37,28 @@ export type BookBorrow = {
 // je to neefektivní a pomalí
 export class Library {
     private books: Map<number, Book>;
+    private newBooks: number[];
     private users: Map<number, User>;
+    private newUsers: number[];
     private bookBorrows: Map<number, BookBorrow>;
-    public db: LibraryDB;
+    private newBookBorrows: number[];
+    private db: LibraryDB;
+    private booksBuffer: Map<Book, boolean> = new Map<Book, boolean>();
+    private usersBuffer: Map<User, boolean> = new Map<User, boolean>();
+    private bookBorrowsBuffer: Map<BookBorrow, boolean> = new Map<BookBorrow, boolean>();
 
     constructor(loadFrom: string = "library.db") {
         this.db = new LibraryDB(loadFrom);
-        this.db.setup();
 
-        console.log(this.db.getBooks());
-        this.books = this.arrayToMap(this.db.getBooks());
-        this.users = this.arrayToMap(this.db.getUsers());
-        this.bookBorrows = this.arrayToMap(this.db.getBookBorrows());
+        this.db.getBooks().then((books => {
+            this.books = this.arrayToMap(books);
+        }));
+        this.db.getUsers().then((users => {
+            this.users = this.arrayToMap(users);
+        }));
+        this.db.getBookBorrows().then((bookBorrows => {
+            this.bookBorrows = this.arrayToMap(bookBorrows);
+        }));
     }
 
     private arrayToMap<T extends object>(array: T[]): Map<number, T> {
@@ -64,16 +73,36 @@ export class Library {
     }
 
     addBook(book: Book) {
-        this.books.set(typeof book.id !== "undefined" ? book.id : findNextNumber(Array.from(this.books.keys())), book);
+        if (typeof this.books !== "undefined") {
+            if (typeof book.id !== "undefined")
+                this.books.set(book.id, book);
+            else {
+                const newId = this.findNextNumber(Array.from(this.books.keys()));
+                this.books.set(newId, book);
+                this.newBooks.push(newId);
+            }
+        } else this.booksBuffer.set(book, true);
     }
     addUser(user: User) {
-        this.users.set(typeof user.id !== "undefined" ? user.id : findNextNumber(Array.from(this.users.keys())), user);
+        if (typeof this.users !== "undefined") {
+            if (typeof user.id !== "undefined")
+                this.users.set(user.id, user);
+            else {
+                const newId = this.findNextNumber(Array.from(this.users.keys()));
+                this.users.set(newId, user);
+                this.newUsers.push(newId);
+            }
+        } else this.usersBuffer.set(user, true);
     }
-    borrowBook(bookId: number, userId: number, endDate: Date) {
-        this.bookBorrows.set(bookId, { bookId, userId, endDate });
+    borrowBook(bookBorrow: BookBorrow) {
+        if (typeof this.bookBorrows !== "undefined")
+            this.bookBorrows.set(bookBorrow.bookId, bookBorrow);
+        else this.bookBorrowsBuffer.set(bookBorrow, true);
     }
     returnBook(bookId: number) {
-        this.bookBorrows.delete(bookId);
+        if (typeof this.bookBorrows !== "undefined")
+            this.bookBorrows.delete(bookId);
+        else this.bookBorrowsBuffer.set({bookId, userId: -1, endDate: new Date(-1)}, false);
     }
 
     getBooks(): Book[] { return Array.from(this.books.values()); }
@@ -95,9 +124,26 @@ export class Library {
         return Array.from(this.bookBorrows.values());
     }
 
+    private findNextNumber(nums: number[]): number {
+        nums.sort((a, b) => a - b);
+        for (let i = 0; i < nums.length; i++) {
+            if (nums[i] !== i + 1) return i + 1;
+        }
+        return nums.length + 1;
+    }
+
     save() {
-        this.users = this.arrayToMap(this.db.addUsers(this.getUsers()));
-        this.books = this.arrayToMap(this.db.addBooks(this.getBooks()));
+        for (const user of this.getUsers()) {
+            if (this.newUsers.includes(user.id))
+                this.db.addUsers(user);
+            else this.db.setUsers(user);
+        }
+
+        for (const book of this.getBooks()) {
+            if (this.newBooks.includes(book.id))
+                this.db.addBooks(book);
+            else this.db.setBooks(book);
+        }
     }
     close() {
         this.save();

@@ -2,13 +2,12 @@ import * as sqlite3 from "sqlite3";
 import { User, Book, BookBorrow, ClientSession } from "./data.js";
 
 export class LibraryDB {
-    db: sqlite3.Database;
+    private db: sqlite3.Database;
 
     constructor(file: string) {
         this.db = new sqlite3.Database(file);
-    }
 
-    setup() {
+        
         this.db.exec(`
             CREATE TABLE IF NOT EXISTS users (
                 id INTEGER PRIMARY KEY,
@@ -59,6 +58,7 @@ export class LibraryDB {
                 stmt.run(u.username, u.firstname, u.surname, u.email, u.hashedPassword, function (err) {
                     if (self.checkError(err)) return;
                     if (!u.id) u.id = this.lastId;
+                    u.update = false;
                     usersOut.push(u);
                 });
             }
@@ -79,6 +79,7 @@ export class LibraryDB {
                 stmt.run(b.name, b.author, b.publication.toISOString(), b.description, b.pngBlob, function (err) {
                     if (self.checkError(err)) return;
                     if (!b.id) b.id = this.lastId;
+                    b.update = false;
                     booksOut.push(b);
                 });
             }
@@ -87,6 +88,28 @@ export class LibraryDB {
 
         return booksOut;
 
+    }
+
+    setUsers(users: User | User[]) {
+        if (!Array.isArray(users)) users = [users];
+        const stmt = this.db.prepare('UPDATE users SET username = ?, firstname = ?, surname = ?, email = ?, hashedPassword = ? WHERE id = ?');
+        for (const u of users) {
+            stmt.run(u.username, u.firstname, u.surname, u.email, u.hashedPassword, u.id, (err) => {
+                if (this.checkError(err)) return;
+            });
+        }
+        stmt.finalize();
+    }
+
+    setBooks(books: Book | Book[]) {
+        if (!Array.isArray(books)) books = [books];
+        const stmt = this.db.prepare('UPDATE books SET name = ?, author = ?, publication = ?, description = ?, pngBlob = ? WHERE id = ?');
+        for (const b of books) {
+            stmt.run(b.name, b.author, b.publication.toISOString(), b.description, b.pngBlob, b.id, (err) => {
+                if (this.checkError(err)) return;
+            });
+        }
+        stmt.finalize();
     }
 
     borrowBooks(bookBorrow: BookBorrow) {
@@ -103,34 +126,37 @@ export class LibraryDB {
         return this.db.get("SELECT * FROM books WHERE id = ?", bookId) as any;
     }
 
-    getBooks(): Book[] {
-        let r: any[] = [];
-        this.db.all("SELECT rowid AS id, name, author, publication, description, pngBlob FROM books", (err, rows) => {
-            if (this.checkError(err)) return;
-            r = rows;
+    async getBooks(): Promise<Book[]> {
+        return new Promise((resolve, reject) => {
+            this.db.all("SELECT * FROM books", (err, rows: any[]) => {
+                if (err) reject(err);
+                else {
+                    rows.forEach(book => book.date = new Date(book.date));
+                    resolve(rows);
+                }
+            });
         });
-        r.forEach(book => book.date = new Date(book.date));
-        return r;
     }
 
-    getUsers(): User[] {
-        let r = [];
-        this.db.all("SELECT rowid AS id, username, firstname, surname, email, hashedPassword FROM users", (err, rows) => {
-            if (this.checkError(err)) return;
-            r = rows;
+    async getUsers(): Promise<User[]> {
+        return new Promise((resolve, reject) => {
+            this.db.all("SELECT * FROM users", (err, rows: any[]) => {
+                if (err) reject(err);
+                else resolve(rows);
+            });
         });
-        return r;
     }
 
-    getBookBorrows(): BookBorrow[] {
-        this.db.all("SELECT * FROM bookBorrows", (err, rows) => {
-            if (this.checkError(err)) return;
-            return rows;
+    async getBookBorrows(): Promise<BookBorrow[]> {
+        return new Promise((resolve, reject) => {
+            this.db.all("SELECT * FROM bookBorrows", (err, rows: any[]) => {
+                if (err) reject(err);
+                else resolve(rows);
+            });
         });
-        return [];
     }
 
-    getSession(userId: number): Promise<ClientSession | undefined> {
+    async getSession(userId: number): Promise<ClientSession | undefined> {
         return this.db.get("SELECT * FROM clientSessions WHERE userId = ?", userId) as any;
     }
 
