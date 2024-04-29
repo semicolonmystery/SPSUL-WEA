@@ -1,0 +1,33 @@
+* {
+    margin: 0;
+}
+body {
+    width: 100vw;
+    height: 100vh;
+}
+.pexeso {
+    display: grid;
+    width: 80vh;
+    height: auto;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    grid-gap: 15px;
+}
+.card {
+    display: flex;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    justify-content: center;
+    align-items: center;
+}
+.card > img {
+    width: 80%;
+    aspect-ratio: 1 / 1;
+    object-fit: contain;
+}
+.matched {
+    
+}
+.revealed {
+
+}

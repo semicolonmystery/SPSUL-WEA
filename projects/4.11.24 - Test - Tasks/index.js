@@ -166,16 +166,20 @@ taskManager.addTask(new Task("fsdfsdf", new Priority(1), new State(1)));
 webLogTasks(taskManager.getSortedTasks(new SortFilter("state", 0)));
 
 function webLogTasks(tasks) {
+    for (const task of tasks) {
+        webLog("--------------------");
+        webLog(`Description: ${task.description}`);
+        webLog(`Id: ${task.id}`);
+        webLog(`Priority: ${task.priority.toString()}`);
+        webLog(`State: ${task.state.toString()}`);
+        webLog("--------------------");
+    }
+}
+
+function webLog(data, opt = "") {
     const webLog = document.getElementById("webLog");
 
-    for (const task of tasks) {
-        webLog.innerHTML += formatHTML("p", `--------------------`);
-        webLog.innerHTML += formatHTML("p", `Description: ${task.description}`);
-        webLog.innerHTML += formatHTML("p", `Id: ${task.id}`);
-        webLog.innerHTML += formatHTML("p", `Priority: ${task.priority.toString()}`);
-        webLog.innerHTML += formatHTML("p", `State: ${task.state.toString()}`);
-        webLog.innerHTML += formatHTML("p", `--------------------`);
-    }
+    webLog.innerHTML += formatHTML("p", data, opt);
 }
 
 function formatHTML(type, data, opt = "") {
