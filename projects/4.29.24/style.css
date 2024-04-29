@@ -1,0 +1,51 @@
+* {
+    margin: 0;
+}
+body {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+#pexeso {
+    display: grid;
+    width: 80vh;
+    height: 80vh;
+    grid-gap: 15px;
+}
+.pex4 {
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+}
+.pex6 {
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+}
+.pex8 {
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+}
+.pex10 {
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+}
+.card {
+    display: flex;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    justify-content: center;
+    align-items: center;
+}
+.card > img {
+    width: 80%;
+    aspect-ratio: 1 / 1;
+    object-fit: contain;
+}
+.matched {
+    
+}
+.revealed {
+
+}
