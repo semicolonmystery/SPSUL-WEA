@@ -19,7 +19,6 @@ const CARDS = [
     "Google",
     "HTML",
     "Instagram",
-    "iOS",
     "Java",
     "JavaScript",
     "jQuery",
@@ -98,6 +97,23 @@ class Card {
 
 document.getElementById("size").getFirstChildByType("input").addEventListener("input", changeSize);
 document.getElementById("reset").addEventListener("click", newGame);
+addEventListener("resize", resizePexeso);
+addEventListener("load", resizePexeso);
+
+function resizePexeso() {
+    const pixesoBoard = document.getElementById("pexeso");
+
+    if (window.innerWidth > window.innerHeight) {
+        pixesoBoard.style.width = "55vh";
+        pixesoBoard.style.height = "55vh";
+    } else if (window.innerWidth+50 > window.innerHeight) {
+        pixesoBoard.style.width = "65vw";
+        pixesoBoard.style.height = "65vw";
+    } else {
+        pixesoBoard.style.width = "80vw";
+        pixesoBoard.style.height = "80vw";
+    }
+}
 
 let size = 4;
 let cards = [];

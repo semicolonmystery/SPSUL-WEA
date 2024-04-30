@@ -10,18 +10,26 @@ body {
     flex-direction: column;
     background-color: rgb(71, 71, 71);
     font-family: "JetBrains Mono", monospace;
-    gap: 40px;
+    gap: 3vh;
 }
 #pexeso {
     display: grid;
     width: 60vh;
     height: 60vh;
     grid-gap: 15px;
+    transition: 1s linear;
 }
 #reset {
-    padding: 10px 40px;
+    padding: 2vh 60px;
     border-radius: 20px;
     border: none;
+    font-size: 80%;
+    transition: 0.2s linear;
+}
+#reset:hover { background-color: rgb(160, 160, 160); }
+#reset:active {
+    background-color: rgb(122, 122, 122);
+    transition: 0.05s linear;
 }
 #size {
     display: grid;
@@ -86,14 +94,17 @@ body {
     transform: rotateY(180deg);
     display: flex;
     justify-content: center;
-    align-items: center;
 }
 .card-back > img {
+    position: absolute;
+    top: 0;
     width: 75%;
     aspect-ratio: 1 / 1;
     object-fit: contain;
 }
 .card-back > h4 {
+    text-align: center;
+    font-size: small;
     position: absolute;
     bottom: 0;
 }
