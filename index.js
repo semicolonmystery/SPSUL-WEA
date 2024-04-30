@@ -11,17 +11,34 @@ start();
 
 async function start() {
     if (urlParams.get("showDate") != null) withDate = urlParams.get("showDate") == "true";
-    updateDate(withDate);
+    updateDate(withDate, false);
+    update();
 }
 
-function updateDate(to) {
+function updateDate(to, refresh = true) {
     if (to != undefined) withDate = to;
     else withDate = !withDate;
     setParam("showDate", withDate);
+
     const showDateButton = document.getElementById("showDate");
     if (withDate) showDateButton.innerText = "Hide date";
     else showDateButton.innerText = "Show date";
-    update(currentDirectory);
+
+    if (refresh) update(currentDirectory);
+}
+
+async function update(url) {
+    if (url) setParam("directory", url);
+    if (urlParams.get("directory") != null && urlParams.get("directory") != currentDirectory) {
+        currentDirectory = "" + removeWrongSlash(urlParams.get("directory"));
+        if (currentDirectory != defaultDirectory) changeStatus("./" + currentDirectory);
+        else changeStatus("");
+    }
+    clearList();
+
+    let data;
+    if (!data) data = await loadData();
+    if (data) setAllContent(data, currentDirectory);
 }
 
 async function loadData() {
@@ -45,20 +62,6 @@ function setParam(param, value) {
         params += `${key}=${val}&`;
     });
     window.history.replaceState(null, null, `${window.location.pathname}?${urlParams}`);
-}
-
-async function update(url) {
-    if (url) setParam("directory", url);
-    if (urlParams.get("directory") != null && urlParams.get("directory") != currentDirectory) {
-        currentDirectory = "" + removeWrongSlash(urlParams.get("directory"));
-        if (currentDirectory != defaultDirectory) changeStatus("./" + currentDirectory);
-        else changeStatus("");
-    }
-    clearList();
-
-    let data;
-    if (!data) data = await loadData();
-    if (data) setAllContent(data, currentDirectory);
 }
 
 async function setAllContent(data, pathToDirectory) {
