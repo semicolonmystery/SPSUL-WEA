@@ -8,8 +8,9 @@ import * as MAIN from "./game.js";
 
 let scene;
 let camera;
-let text;
+let nameText;
 let rectLight;
+let subTexts = [];
 
 export function setup() {
     scene = MAIN.scene;
@@ -18,7 +19,7 @@ export function setup() {
     
     RectAreaLightUniformsLib.init();
 
-    const textGeometry = new TextGeometry( 'Tic Tac Toe', {
+    const nameTextGeometry = new TextGeometry( "Tic Tac Toe", {
         font: new FontLoader().parse(HelvetikerRegular.default),
         size: 25,
         height: 5,
@@ -30,14 +31,32 @@ export function setup() {
         bevelSegments: 20
     });
     
-    const material = new THREE.MeshStandardMaterial({color: 0xffffff});
-    text = new THREE.Mesh(textGeometry, material);
-    textGeometry.computeBoundingBox();
-    const textSize = textGeometry.boundingBox.max;
-    text.geometry.center();
-    scene.add(text);
+    const simpleMaterial = new THREE.MeshStandardMaterial({color: 0xffffff});
+    nameText = new THREE.Mesh(nameTextGeometry, simpleMaterial);
+    nameTextGeometry.computeBoundingBox();
+    const nameTextSize = nameTextGeometry.boundingBox.max;
+    nameText.geometry.center();
+    scene.add(nameText);
+
+    const subTextAGeometry = new TextGeometry("Press space to play", {
+        font: new FontLoader().parse(HelvetikerRegular.default),
+        size: 10,
+        height: 5,
+        curveSegments: 50,
+        bevelEnabled: true,
+        bevelThickness: 1,
+        bevelSize: 1,
+        bevelOffset: -0.5,
+        bevelSegments: 20
+    });
+
+    const subTextA = new THREE.Mesh(subTextAGeometry, simpleMaterial);
+    subTextA.geometry.center();
+    subTextA.position.y = -50;
+    scene.add(subTextA);
+    subTexts.push(subTextA);
     
-    rectLight = new THREE.RectAreaLight(0xff0000, 10,  textSize.x, textSize.y);
+    rectLight = new THREE.RectAreaLight(0xff0000, 10,  nameTextSize.x, nameTextSize.y);
     rectLight.position.set(0, 0, 200);
     rectLight.lookAt(0, 0, 0);
     scene.add(rectLight);
@@ -51,6 +70,46 @@ export function setup() {
 
 export function update(delta) {
     updateLight(delta);
+    updateTexts();
+    updateCamera(delta);
+}
+
+let cameraTransition = false;
+let transitionDone = false;
+let transitionDuration = 0;
+
+export function start() {
+    cameraTransition = true;
+}
+
+function updateCamera(delta) {
+    const timeToReach = 20;
+    console.log(transitionDone);
+    if (!cameraTransition || transitionDone) return
+    
+    if (transitionDone) return;
+
+    transitionDuration += delta;
+
+    const easeInOutQuad = (t) => t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+    //const lerp = (start, end, t) => start * (1 - t) + end * t;
+
+    const t = Math.min(transitionDuration / timeToReach, 1);
+    if (t >= 1) {
+        transitionDone = true;
+    }
+
+    const easedT = easeInOutQuad(t);
+
+    camera.position.x += (nameText.position.x - camera.position.x) * easedT;
+    camera.position.y += (nameText.position.y - camera.position.y) * easedT;
+    camera.position.z += (nameText.position.z - camera.position.z) * easedT;
+}
+
+function updateTexts() {
+    for (let text of subTexts) {
+        text.lookAt(camera.position);
+    }
 }
 
 const rainbowColors = generateRainbowColors(30);
@@ -66,7 +125,7 @@ function updateLight(delta) {
 
 function updateMouseRotation(event) {
 	const aspect = window.innerWidth / window.innerHeight;
-	console.log(aspect);
+    
     const mouseX = (-(event.clientX / window.innerWidth) * 2 + 1) * 0.15 / aspect;
     const mouseY = ((event.clientY / window.innerHeight) * 2 - 1) * 0.15 * aspect;
 
@@ -75,7 +134,7 @@ function updateMouseRotation(event) {
 
     const dir = vector.sub(camera.position).normalize().negate();
 
-    text.lookAt(dir);
+    nameText.lookAt(dir);
 }
 
 function shiftColor(currentColor, deltaTimeSeconds, shiftingToColor, speed) {
