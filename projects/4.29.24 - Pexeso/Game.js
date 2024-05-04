@@ -209,6 +209,7 @@ function newGame() {
     for (const cardElement of pexesoCardElements) {
         pexesoBoard.appendChild(cardElement);
     }
+    resizePexeso();
 }
 
 function changeSize() {
