@@ -14,9 +14,6 @@ body {
 }
 #pexeso {
     display: grid;
-    width: 60vh;
-    height: 60vh;
-    grid-gap: 15px;
     transition: 1s linear;
 }
 #reset {
@@ -59,10 +56,26 @@ body {
     grid-row-end: 3;
     transition: 0.2s;
 }
-.pex4 {  grid-template-columns: repeat(4,  1fr); grid-template-rows: repeat(4,  1fr); }
-.pex6 {  grid-template-columns: repeat(6,  1fr); grid-template-rows: repeat(6,  1fr); }
-.pex8 {  grid-template-columns: repeat(8,  1fr); grid-template-rows: repeat(8,  1fr); }
-.pex10 { grid-template-columns: repeat(10, 1fr); grid-template-rows: repeat(10, 1fr); font-size: 0.5rem; }
+.pex4 {
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    gap: 15px;
+}
+.pex6 {
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    gap: 12px;
+}
+.pex8 {
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    gap: 9px;
+}
+.pex10 {
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+    gap: 6px;
+}
 
 .card {
     aspect-ratio: 1 / 1;
@@ -104,7 +117,6 @@ body {
 }
 .card-back > h4 {
     text-align: center;
-    font-size: small;
     position: absolute;
     bottom: 0;
 }
