@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://fonts.googleapis.com/css?family=JetBrains Mono' rel='stylesheet'>
+    <link rel="stylesheet" href="styles.css">
+    <title>12.10.23</title>
+</head>
+<body>
+    <form href="./" method="GET">
+        <table class="login">
+            <tr>
+                <td><label for="name">Jméno: </label></td>
+                <td class="tcenter"><input type="text" name="name"></td>
+            </tr><br>
+            <tr>
+                <td><label for="surname">Příjmení: </label></td>
+                <td class="tcenter"><input type="text" name="surname"></td>
+            </tr><br>
+            <tr>
+                <td><label for="email">Email: </label></td>
+                <td class="tcenter"><input type="text" name="email"></td>
+            </tr><br>
+            <tr>
+                <td><label for="phone">Telefonní číslo: </label></td>
+                <td class="tcenter"><input type="text" name="phone"></td>
+            </tr><br>
+            <tr>
+                <td><label for="location">Bydliště</label></td>
+                <td class="tcenter"><input type="text" name="location"></td>
+            </tr><br>
+            <tr>
+                <td><label for="sex">Vyber pohlaví</label></td><br>
+                <td>
+                    <input type="radio" id="female" name="sex" value="female">
+                    <label for="female">Žena</label><br>
+                    <input type="radio" id="male" name="sex" value="male">
+                    <label for="male">Muž</label><br>
+                    <input type="radio" id="airplane" name="sex" value="airplane">
+                    <label for="airplane">Letadlo</label><br>
+                    <input type="radio" id="other" name="sex" value="other">
+                    <label for="other">Ostatní</label>
+                </td>
+            </tr><br>
+            <tr>
+                <td><label for="age">Vyber věkovou kategorii</label><br></td>
+                <td>
+                    <input type="radio" id="12-18" name="age" value="12-18">
+                    <label for="12-18">12-18</label><br>
+                    <input type="radio" id="19-30" name="age" value="19-30">
+                    <label for="19-30">19-30</label><br>
+                    <input type="radio" id="31-50" name="age" value="31-50">
+                    <label for="31-50">31-50</label><br>
+                    <input type="radio" id="51-70" name="age" value="51-70">
+                    <label for="51-70">51-70</label><br>
+                    <input type="radio" id="71-99+" name="age" value="71-99+">
+                    <label for="71-99+">71-99+</label>
+                </td>
+            </tr><br>
+            <tr>
+                <td><label for="ownership">Zvol co vlastníš</label></td><br>
+                <td>
+                    <input type="checkbox" id="partner" name="ownership" value="partner">
+                    <label for="partner">Přitele/Přítelkyni</label><br>
+                    <input type="checkbox" id="phone" name="ownership" value="phone">
+                    <label for="phone">Mobil</label>
+                </td>
+            </tr><br>
+            <tr><td class="tcenter" colspan="2"><input type="submit" value="Submit"></td></tr>
+        </table>
+    </form>
+    <script src="script.js"></script>
+</body>
+</html>

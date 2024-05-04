@@ -1,0 +1,141 @@
+@import url("https://fonts.googleapis.com/css?family=JetBrains Mono");
+* {
+    color: white;
+}
+body {
+    background-color: rgb(65, 65, 65);
+    color: white;
+    font-family: JetBrains Mono;
+    display: block;
+    text-align: center;
+    margin: 0;
+}
+header {
+    margin-bottom: auto;
+    height: auto;
+    background-color: rgb(73, 73, 73);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+header > h1 {
+
+    margin: 5px;
+    font-size: 45px;
+}
+header > nav {
+    margin-left: 30px;
+    display: flex;
+    text-align: left;
+    flex-direction: column;
+}
+.aboutme {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.social {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}
+.social > a {
+    text-decoration: none;
+    font-size: 25px;
+    text-align: center;
+    margin: 5px;
+    padding: 7px;
+    border-radius: 10px;
+    background-color: rgb(0, 0, 186);
+    transition: 1s;
+}
+.social > a:hover {
+    background-color: rgb(0, 0, 100);
+}
+.aboutme > img {
+    margin: 20px;
+    height: 250px;
+    width: 250px;
+}
+.aboutmeTextHolder {
+    width: 80%;
+    height: 300px;
+    text-align: justify;
+}
+.projects {
+    margin: 10px;
+    display: grid;
+    grid-template-columns: repeat( auto-fill, minmax(300px, 1fr));
+    column-gap: 10px;
+    row-gap: 10px;
+    align-items: center;
+    list-style-type: none;
+    padding: 0;
+}
+.project {
+    height: 350px;
+    background-image: url("img/default.jpg");
+    background-blend-mode: darken;
+    background-color: rgba(0, 0, 0, 0.7);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    padding: 15px;
+    border-radius: 20px;
+}
+.projectText { text-align: left; }
+footer {
+    margin-top: auto;
+    height: auto;
+    padding: 10px;
+    background-color: rgb(73, 73, 73);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+a:hover { color: rgb(217, 217, 217); }
+.contactMe {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: start;
+    margin-bottom: 20px;
+}
+.contactMe label { margin-right: 10px; }
+.contactMe td { padding: 0; }
+.contactMe textarea, input:not([type="submit"]) {
+    width: 100%;
+    background-color: rgb(57, 57, 57);
+    border-radius: 3px;
+    border: solid 1px rgb(97, 97, 97);
+}
+.contactMe textarea:focus, input:not([type="submit"]):focus { background-color: rgb(27, 27, 27); }
+.contantMeContent {
+    overflow: hidden;
+    resize: none;
+    max-width: 600px;
+    resize: vertical;
+}
+.contactMe input[type="submit"] {
+    background-color: rgb(57, 57, 57);
+    border-radius: 5px;
+    padding: 5px;
+    width: 30vw;
+    border: none;
+}
+.contantMeCenter { text-align: center; }
+.contactMe input[type="submit"]:hover { background-color: rgb(27, 27, 27); }
+@media (max-width: 600px) {
+    header { flex-direction: column; }
+    .social { flex-direction: column; }
+    .social > a { width: 75vw; font-size: 20px; border-radius: 10px; padding: 12px; }
+    .social > a:hover { background-color: rgb(0, 0, 186); }
+    .aboutme > img { width: 75vw; height: 75vw; }
+    .projects { grid-template-columns: auto; }
+    .contactMe input[type="submit"] { width: 90vw; }
+    a:hover { color: white; }
+}

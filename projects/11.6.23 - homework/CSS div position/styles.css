@@ -1,0 +1,93 @@
+:root {
+    --cornerSize: 10;
+    --cornerMargin: 2;
+    --cornerRadius: 35%;
+    --contentCornerScale: 3;
+}
+* {
+    text-align: center;
+    color: white
+}
+body {
+    font-family: JetBrains Mono;
+    background-color: rgb(63, 63, 63);
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+div {
+    width: min(calc(var(--cornerSize) * 1vw), calc(var(--cornerSize) * 1vh));
+    height: min(calc(var(--cornerSize) * 1vw), calc(var(--cornerSize) * 1vh));
+}
+.content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.blue { background-color: blue; }
+.red { background-color: red; }
+.green { background-color: green; }
+.topLeft {
+    position: fixed;
+    transform: scaleX(-1);
+    top: min(calc(var(--cornerMargin) * 1vw), calc(var(--cornerMargin) * 1vh));
+    left: min(calc(var(--cornerMargin) * 1vw), calc(var(--cornerMargin) * 1vh));
+}
+.topRight {
+    position: fixed;
+    top: min(calc(var(--cornerMargin) * 1vw), calc(var(--cornerMargin) * 1vh));
+    right: min(calc(var(--cornerMargin) * 1vw), calc(var(--cornerMargin) * 1vh));
+}
+.bottomLeft {
+    position: fixed;
+    transform: scaleX(-1) scaleY(-1);
+    bottom: min(calc(var(--cornerMargin) * 1vw), calc(var(--cornerMargin) * 1vh));
+    left: min(calc(var(--cornerMargin) * 1vw), calc(var(--cornerMargin) * 1vh));
+}
+.bottomRight {
+    position: fixed;
+    transform: scaleY(-1);
+    bottom: min(calc(var(--cornerMargin) * 1vw), calc(var(--cornerMargin) * 1vh));
+    right: min(calc(var(--cornerMargin) * 1vw), calc(var(--cornerMargin) * 1vh));
+}
+.topMiddle {
+    border-radius: 0 var(--cornerRadius) 0 0;
+}
+.topRightLeft {
+    position: absolute;
+    top: 0;
+    right: 100%;
+    border-radius: var(--cornerRadius) 0 0 var(--cornerRadius);
+}
+.topRightBottom {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    border-radius: 0 0 var(--cornerRadius) var(--cornerRadius);
+}
+.cornerHolder {
+    width: min(calc(var(--cornerSize) * var(--contentCornerScale) * 2vh), calc(var(--cornerSize) * var(--contentCornerScale) * 2vh));
+    height: min(calc(var(--cornerSize) * var(--contentCornerScale) * 2vw), calc(var(--cornerSize) * var(--contentCornerScale) * 2vh));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.contentCorner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: min(calc(var(--cornerSize) * var(--contentCornerScale) * 1vw), calc(var(--cornerSize) * var(--contentCornerScale) * 1vh));
+    height: min(calc(var(--cornerSize) * var(--contentCornerScale) * 1vw), calc(var(--cornerSize) * var(--contentCornerScale) * 1vh));
+}
+.contentCornerText {
+    text-align: left;
+    white-space: nowrap;
+}

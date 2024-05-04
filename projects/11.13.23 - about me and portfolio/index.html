@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mé portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Mé portfolio</h1>
+        <nav>
+            <a href="#aboutMe">O mě</a>
+            <a href="#projects">Projekty</a>
+            <a href="#contactMe">Kontaktuj mě</a>
+        </nav>
+    </header>
+    <main>
+        <div id="aboutMe" class="aboutme">
+            <h2>O mně</h2>
+            <div class="aboutmeTextHolder"><p id="aboutmeText">Jsem programátor studující na Střední průmyslové škole v Ústí nad Labem na adrese Resslova 5. V současné době se zaměřuji na tvorbu projektů s využitím Arduino, Raspberry Pi a 3D tiskárny Geetech A20t. Mým cílem je zdokonalovat své dovednosti v programování a hardwarovém inženýrství prostřednictvím praktických projektů. V rámci mého studia jsem se intenzivně věnoval programování v jazyce C a jeho aplikacím v oblasti vestavěných systémů. Pracoval jsem na projektech s Arduino, což mi umožnilo lépe porozumět principům mikrokontrolérů a jejich integraci do elektronických zařízení. Dále jsem se zabýval vývojem projektů s Raspberry Pi, kde jsem se naučil využívat možnosti tohoto jednodeskového počítače pro různé účely, jako například domácí automatizaci nebo vývoj softwarových aplikací. Mým dalším zájmem je práce s 3D tiskárnou Geetech A20t. S touto tiskárnou jsem vytvářel tříbarevné a vícebarevné tisky, což poskytuje široké možnosti pro design a výrobu prototypů. Prostřednictvím tohoto procesu jsem získal hlubší porozumění 3D modelování a tisku. Celkově se snažím spojit teoretické znalosti získané ve škole s praktickými zkušenostmi prostřednictvím vlastních projektů, abych se co nejlépe připravil na profesionální kariéru v oblasti programování a technického designu.</p></div>
+            <img src="img/profile.png" alt="">
+            <div class="social">
+                <a href="https://www.facebook.com/poddluk/">Facebook</a>
+                <a href="https://twitter.com/Verustus_">Twitter</a>
+                <a href="https://linkedin.com/">Linkedin</a>
+            </div>
+        </div>
+        <div id="projects">
+            <h2>Projekty</h2>
+            <p>(nic tady jsem opravdu neudělal)</p>
+            <ul class="projects">
+                <li class="project" style="background-image: url(img/vlhkost.jpg);">
+                    <h3 class="projectName">Měřič Teploty a Vlhkosti</h3>
+                    <p class="projectText">Můj nedávný projekt spočívá v konstrukci a programování jednoduchého měřiče teploty a vlhkosti pomocí Arduino mikrokontroléru. Cílem bylo vytvořit kompaktní zařízení, které by bylo schopné sledovat aktuální podmínky v místnosti a poskytovat oznámení v případě, že teplota nebo vlhkost překročí nastavená hranice.</p>
+                </li>
+                <li class="project" style="background-image: url(img/arduino.webp);">
+                    <h3 class="projectName">Bezdrátový Měřič Příkonu</h3>
+                    <p class="projectText">Vytvořil jsem Arduino projekt, který měří elektrický příkon spotřebičů a zobrazuje grafické rozhraní na barevném OLED displeji. Projekt umožňuje uživatelům sledovat energetickou spotřebu zařízení a analyzovat data v reálném čase.</p>
+                </li>
+                <li class="project" style="background-image: url(img/cam.jpg);">
+                    <h3 class="projectName">Kamerový Systém s Detekcí Pohybu</h3>
+                    <p class="projectText">Postavil jsem bezpečnostní kamerový systém pomocí Raspberry Pi s funkcí detekce pohybu. Systém automaticky zaznamenává videa nebo pořizuje fotografie při detekci pohybu a ukládá je na cloudové úložiště.</p>
+                </li>
+                <li class="project" style="background-image: url(img/reprak.jpg);">
+                    <h3 class="projectName">Bluetooth reproduktor s LED Efekty</h3>
+                    <p class="projectText">Vytvořil jsem vlastní Bluetooth reproduktor s barevnými LED efekty, které reagují na hudbu. Reproduktor je přenosný a nabízí skvělý zvukový zážitek doplněný vizuálními efekty podle rytmu přehrávané hudby.</p>
+                </li>
+                <li class="project" style="background-image: url(img/zavlaha.jpg);">
+                    <h3 class="projectName">Smart Závlažování rostlin</h3>
+                    <p class="projectText">Navrhl jsem chytrý závlahový systém s možností programování a ovládání pomocí mobilní aplikace. Projekt využívá Arduino pro monitorování vlhkosti půdy a automatické ovládání závlahy v závislosti na aktuálních podmínkách.</p>
+                </li>
+                <li class="project" style="background-image: url(img/hra.jpg);">
+                    <h3 class="projectName">Elektronická Stolní Hra</h3>
+                    <p class="projectText">Postavil jsem vlastní elektronickou stolní hru, která je ovládaná pomocí Arduino. Hra obsahuje LED displej, tlačítka a senzory pro interaktivní a zábavný herní zážitek.</p>
+                </li>
+            </ul>
+        </div>
+        <div id="contactMe">
+            <h2>Kontaktuj mně</h2>
+            <p style="font-size: 10px;">(nefunguje, nebudu si zakládat zas účet u random společnosti jen kvůli tomuto)</p>
+            <form action="javascript:sendEmail()" class="contactMe" name="contactMeForm">
+                <table>
+                    <tr>
+                        <td><label for="firstName">Křestné jméno:</label></td>
+                        <td><input type="text" name="firstName" id="firstName"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="lastName">Příjmení:</label></td>
+                        <td><input type="text" name="lastName" id="lastName"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="email">Email:</label></td>
+                        <td><input type="text" name="email" id="email" autocomplete="off"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="password">Heslo:</label></td>
+                        <td><input type="password" name="password" id="password"></td>
+                    </tr>
+                    <tr><td class="contantMeCenter" colspan="2"><label for="content">Obsah:</label></td></tr>
+                    <tr><td colspan="2"><textarea class="contantMeContent" name="content" id="content"></textarea></td></tr>
+                    <tr><td class="contantMeCenter" colspan="2"><input type="submit" value="Odeslat"></td></tr>
+                </table>
+            </form>
+        </div>
+    </main>
+    <footer>
+        <a href="https://github.com/Verustus/SPSUL-WEA">Github</a>
+        <a href="https://verustus.github.io/SPSUL-WEA">SPSUL-WEA project explorer</a>
+    </footer>
+    <script src="size.js"></script>
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
+    <script src="contact.js"></script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/libs/bootstrap/css/bootstrap.min.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <button type="button" class="btn btn-primary position-relative">
+            Viewers
+            <span class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle">5</span>
+          </button>
+        <form class="needs-validation" novalidate>
+            <div class="mb-3">
+                <label class="form-label" for="fullname">Full name</label>
+                <input class="form-control" type="text" name="fullname" id="fullname" required>
+                <div class="invalid-feedback">Please specify email!</div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="email">Email</label>
+                <input class="form-control" type="email" name="email" id="email" required>
+                <div class="invalid-feedback">Please specify email!</div>
+            </div>
+            <div class="mb-3">
+                <select name="gender" class="form-select" required>
+                    <option selected disabled>Not selected</option>
+                    <option value="men">men</option>
+                    <option value="women">women</option>
+                    <option value="other">other</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        <script src="/libs/bootstrap/js/bootstrap.min.js"></script>
+        <script src="form-valid.js"></script>
+    </div>
+</body>
+</html>

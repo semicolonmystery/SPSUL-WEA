@@ -1,0 +1,20 @@
+body {
+    background-color: rgb(70, 70, 70);
+}
+
+.a {
+    display: flex;
+    justify-content: center;
+}
+.a img {
+    width: 200px;
+    height: auto;
+}
+.b {
+    display: flex;
+    justify-content: center;
+}
+.b img {
+    width: 200px;
+    height: auto;
+}
