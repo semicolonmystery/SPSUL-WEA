@@ -1,0 +1,91 @@
+html {
+    height: 100vh;
+    width: 100vw;
+}
+.unselectable {
+    -webkit-user-drag: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+body {
+    position:absolute;
+    background-color: rgb(73, 73, 73);
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+    height:auto;
+    bottom:0;
+    top:0;
+    left:0;
+    right:0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+    transition: linear 2s;
+}
+
+#refugees {
+    position: absolute;
+    left: 20px;
+    top: 10px;
+}
+#score {
+    position: absolute;
+    left: 20px;
+    top: 30px;
+}
+#wave {
+    position: absolute;
+    left: 20px;
+    top: 50px;
+}
+#jail {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 20%;
+    height: 20%;
+    background-color: rgb(102, 102, 102);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+}
+
+.prisoner {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: rgba(255, 0, 0, 0.275);
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.prisoner > img {
+    width: 60%;
+    height: auto;
+}
+
+#victory {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    transition: linear 1s;
+}
+#victory > * {
+    animation: fadeIn 1.5s;
+}
+
+@keyframes fadeIn {
+    0%   { opacity: 0; }
+    100% { opacity: 1; }
+}
