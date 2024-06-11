@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Typeracer</title>
+</head>
+<body>
+  <h1 id="playerCount">0</h1>
+  <div id="game" class="container">
+    <img id="trafficLight" src="img/traffic-light-box.gif">
+    <h1>Typeracer</h1>
+    <div id="track">
+    </div>
+    <p id="textToType">Joining game...</p>
+    <input type="text" id="inputField" placeholder="Start typing..." disabled/>
+  </div>
+  <div id="gameOverScreen" style="display: none" class="container screen">
+    <h1>Game Over</h1>
+    <p>You were to slow, maybe you will win next time!</p>
+    <button onclick="newGame()">Play Again</button>
+  </div>
+  <div id="winScreen" style="display: none" class="container screen">
+    <h1>Congratulations!</h1>
+    <p>You have won the race!</p>
+    <button onclick="newGame()">Play Again</button>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
