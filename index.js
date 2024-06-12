@@ -85,7 +85,7 @@ async function setAllContent(data, pathToDirectory) {
     const fileList = [{ index: 1, url: defaultDirectory, displayname: "./"}];
     parentList.tree = parentList.tree.filter(file => file.path.startsWith(pathToDirectory));
     parentList.tree.forEach((file, index) => parentList.tree[index].path = removeWrongSlash(file.path.substring(pathToDirectory.length)));
-    parentList.tree.find(file => console.log(file.path));
+    
     if (parentList.tree.find(file => file.path === "") || currentDirectory === "") {
         const directoryFiles = parentList.tree.filter(file =>
             (file.type == "tree" && file.path.split("/").length == 1 && file.path != "") ||
