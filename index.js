@@ -1,9 +1,10 @@
 let withDate = true;
-const user = "verustus";
+const user = "semicolonmystery";
 const repo = "SPSUL-WEA";
-const defaultDirectory = "projects";
+const branch = "master"
+const defaultDirectory = "";
 
-const url = `https://api.github.com/repos/${user}/${repo}/git/trees/master?recursive=1`;
+const url = `https://api.github.com/repos/${user}/${repo}/git/trees/${branch}?recursive=1`;
 const urlParams = new URLSearchParams(window.location.search);
 let currentDirectory = defaultDirectory;
 
@@ -30,7 +31,8 @@ function updateDate(to, refresh = true) {
 async function update(url) {
     if (url) setParam("directory", url);
     if (urlParams.get("directory") != null && urlParams.get("directory") != currentDirectory) {
-        currentDirectory = "" + removeWrongSlash(urlParams.get("directory"));
+        currentDirectory = removeWrongSlash(urlParams.get("directory"));
+        
         if (currentDirectory != defaultDirectory) changeStatus("./" + currentDirectory);
         else changeStatus("");
     }
@@ -82,9 +84,9 @@ async function setAllContent(data, pathToDirectory) {
     }
     const fileList = [{ index: 1, url: defaultDirectory, displayname: "./"}];
     parentList.tree = parentList.tree.filter(file => file.path.startsWith(pathToDirectory));
-    parentList.tree.forEach((file, index) => 
-        parentList.tree[index].path = removeWrongSlash(file.path.substring(pathToDirectory.length)));
-    if (parentList.tree.find(file => file.path == "")) {
+    parentList.tree.forEach((file, index) => parentList.tree[index].path = removeWrongSlash(file.path.substring(pathToDirectory.length)));
+    parentList.tree.find(file => console.log(file.path));
+    if (parentList.tree.find(file => file.path === "") || currentDirectory === "") {
         const directoryFiles = parentList.tree.filter(file =>
             (file.type == "tree" && file.path.split("/").length == 1 && file.path != "") ||
             (file.type == "blob" && (file.path.split("/").length == 1 || file.path.split("/")[1] == "index.html")));
