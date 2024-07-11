@@ -23,7 +23,7 @@ function loadPage() {
     if (difficulty == null) difficulty = 1;
     updateDifficulty(false);
 
-    fill = getCookie("fill");
+    fill = getCookie("fill") === "true";
     if (fill == null) fill = true;
     updateFill(false);
     
@@ -172,6 +172,7 @@ function updateDifficulty(add=true) {
         if (++difficulty == 4) difficulty = 1;
     }
     difficultyButton.innerText = difficulty;
+    
     setCookie("difficulty", difficulty);
 }
 function updateFill(toggle=true) {
@@ -180,6 +181,7 @@ function updateFill(toggle=true) {
 
     if (fill) fillButton.innerText = "on";
     else fillButton.innerText = "off";
+    
     setCookie("fill", fill);
 }
 
