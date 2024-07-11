@@ -1,5 +1,5 @@
 const MAX_AGE = 34560000;
-const DEFAULT_PATH = "/3.12.24 - Hangman - Gallows Game"
+const DEFAULT_PATH = "/SPSUL-WEA/projects/3.12.24 - Hangman - Gallows Game";
 
 function getCookie(key) {
     let cookies = decodeURIComponent(document.cookie);
