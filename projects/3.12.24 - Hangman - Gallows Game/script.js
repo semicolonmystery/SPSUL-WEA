@@ -16,10 +16,7 @@ loadPage();
 
 function loadPage() {
     deaths = getCookie("deaths");
-    if (deaths == null) {
-        setCookie("deaths", 0+"");
-        deaths = 0;
-    }
+    if (deaths == null) deaths = 0;
     updateDeaths();
     
     newGame();
@@ -27,6 +24,7 @@ function loadPage() {
 
 function updateDeaths() {
     document.getElementById("deaths").innerText = deaths;
+    setCookie("deaths", deaths);
 }
 
 function newGame() {
@@ -145,7 +143,7 @@ function lose() {
     statusEl.style.opacity = 1;
     lock = true;
 
-    setCookie("deaths", ++deaths);
+    deaths++;
     updateDeaths();
 }
 
