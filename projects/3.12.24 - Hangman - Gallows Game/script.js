@@ -3,9 +3,9 @@ let currentWord;
 let dashedWord;
 let errors;
 let deaths;
-let difficulty = 1;
+let difficulty;
+let fill;
 let lock = true;
-let fill = true;
 
 const dashesEl = document.getElementById("dashes");
 const lettersEl = document.getElementById("letters");
@@ -18,6 +18,14 @@ function loadPage() {
     deaths = getCookie("deaths");
     if (deaths == null) deaths = 0;
     updateDeaths();
+
+    difficulty = getCookie("difficulty");
+    if (difficulty == null) difficulty = 1;
+    updateDifficulty(false);
+
+    fill = getCookie("fill");
+    if (fill == null) fill = true;
+    updateFill(false);
     
     newGame();
 }
@@ -157,18 +165,22 @@ function setDeathStage(num) {
     }
 }
 
-function updateDifficulty() {
+function updateDifficulty(add=true) {
     const difficultyButton = document.getElementById("difficulty");
 
-    if (++difficulty == 4) difficulty = 1;
+    if (add) {
+        if (++difficulty == 4) difficulty = 1;
+    }
     difficultyButton.innerText = difficulty;
+    setCookie("difficulty", difficulty);
 }
-function updateFill() {
+function updateFill(toggle=true) {
     const fillButton = document.getElementById("fill");
-    fill = !fill;
+    if (toggle) fill = !fill;
 
     if (fill) fillButton.innerText = "on";
     else fillButton.innerText = "off";
+    setCookie("fill", fill);
 }
 
 document.addEventListener('keydown', function(event) {
