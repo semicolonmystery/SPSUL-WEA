@@ -15,7 +15,7 @@ const guessingEl = document.getElementById("guessing");
 loadPage();
 
 function loadPage() {
-    let deaths = getCookie("deaths");
+    deaths = getCookie("deaths");
     if (deaths == null) {
         setCookie("deaths", 0+"");
         deaths = 0;
