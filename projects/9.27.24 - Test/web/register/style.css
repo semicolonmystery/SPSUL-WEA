@@ -1,0 +1,55 @@
+.form-section {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    margin-top: 50px;
+    padding: 20px;
+    background-color: rgb(65, 65, 65);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 15px;
+    border: 1px solid rgb(81, 255, 0);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-section h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #ffffff;
+}
+
+.form-section label {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 5px;
+    color: #ffffff;
+}
+
+.form-section input[type="email"],
+.form-section input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #858585a8;
+    background-color: rgba(0, 0, 0, 0.486);
+    border-radius: 4px;
+    font-size: 16px;
+    color: #d4d4d4;
+}
+
+.form-section input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #11c700;
+    border: none;
+    border-radius: 4px;
+    font-size: 18px;
+    color: white;
+    cursor: pointer;
+}
+
+.form-section input[type="submit"]:hover {
+    background-color: #d4b54d;
+    transition: 0.3s;
+}
