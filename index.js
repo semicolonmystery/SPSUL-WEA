@@ -2,7 +2,7 @@ let withDate = true;
 const user = "semicolonmystery";
 const repo = "SPSUL-WEA";
 const branch = "master"
-const defaultDirectory = "";
+const defaultDirectory = "projects";
 
 const url = `https://api.github.com/repos/${user}/${repo}/git/trees/${branch}?recursive=1`;
 const urlParams = new URLSearchParams(window.location.search);

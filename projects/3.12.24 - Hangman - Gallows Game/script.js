@@ -3,9 +3,9 @@ let currentWord;
 let dashedWord;
 let errors;
 let deaths;
-let difficulty = 1;
+let difficulty;
+let fill;
 let lock = true;
-let fill = true;
 
 const dashesEl = document.getElementById("dashes");
 const lettersEl = document.getElementById("letters");
@@ -15,18 +15,24 @@ const guessingEl = document.getElementById("guessing");
 loadPage();
 
 function loadPage() {
-    let deaths = getCookie("deaths");
-    if (deaths == null) {
-        setCookie("deaths", 0+"");
-        deaths = 0;
-    }
+    deaths = getCookie("deaths");
+    if (deaths == null) deaths = 0;
     updateDeaths();
+
+    difficulty = getCookie("difficulty");
+    if (difficulty == null) difficulty = 1;
+    updateDifficulty(false);
+
+    fill = getCookie("fill") === "true";
+    if (fill == null) fill = true;
+    updateFill(false);
     
     newGame();
 }
 
 function updateDeaths() {
     document.getElementById("deaths").innerText = deaths;
+    setCookie("deaths", deaths);
 }
 
 function newGame() {
@@ -145,7 +151,7 @@ function lose() {
     statusEl.style.opacity = 1;
     lock = true;
 
-    setCookie("deaths", ++deaths);
+    deaths++;
     updateDeaths();
 }
 
@@ -159,18 +165,24 @@ function setDeathStage(num) {
     }
 }
 
-function updateDifficulty() {
+function updateDifficulty(add=true) {
     const difficultyButton = document.getElementById("difficulty");
 
-    if (++difficulty == 4) difficulty = 1;
+    if (add) {
+        if (++difficulty == 4) difficulty = 1;
+    }
     difficultyButton.innerText = difficulty;
+    
+    setCookie("difficulty", difficulty);
 }
-function updateFill() {
+function updateFill(toggle=true) {
     const fillButton = document.getElementById("fill");
-    fill = !fill;
+    if (toggle) fill = !fill;
 
     if (fill) fillButton.innerText = "on";
     else fillButton.innerText = "off";
+    
+    setCookie("fill", fill);
 }
 
 document.addEventListener('keydown', function(event) {
