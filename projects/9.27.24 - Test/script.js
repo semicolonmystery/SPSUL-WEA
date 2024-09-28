@@ -6,55 +6,50 @@ const app = express();
 const PORT = 3000;
 
 const servePage = (folderName, res) => {
+    const indexHtml = path.join(__dirname, "web", "index.html");
     const headFile = path.join(__dirname, "web", folderName, "head.html");
     const contentFile = path.join(__dirname, "web", folderName, "content.html");
 
-    const indexHtml = path.join(__dirname, "web", "index.html");
+    try {
+        let index = fs.readFileSync(indexHtml, "utf8");
 
-    fs.readFile(indexHtml, "utf8", (err, data) => {
-        if (err) return res.status(500).send("Error reading index.html");
+        let head = "";
+        let content = "No content here yet!";
+        try {
+            head = fs.readFileSync(headFile, "utf8");
+            content = fs.readFileSync(contentFile, "utf8");
+        } catch (error) {}
 
-        let pageContent = data;
-        
-        fs.readFile(headFile, "utf8", (err, headData) => {
-            if (err) headData = "";
-            pageContent = pageContent.replace("%head%", headData);
+        index = index.replace("%head%", head).replace("%content%", content);
 
-            fs.readFile(contentFile, "utf8", (err, contentData) => {
-                if (err) contentData = "Content not found.";
-                pageContent = pageContent.replace("%content%", contentData);
-                res.send(pageContent);
-            });
-        });
-    });
+        let status = 200;
+        if (folderName === "404") status = 404;
+        res.status(status).send(index);
+    } catch (error) {
+        return res.status(500).send("Error reading index.html!");
+    }
 };
 
-fs.readdir(path.join(__dirname, "web"), { withFileTypes: true }, (err, folders) => {
-    if (err) {
-        console.error("Error reading web directory:", err);
-        return;
-    }
-
-    folders.forEach(folder => {
+try {
+    const webFolder = fs.readdirSync(path.join(__dirname, "web"), { withFileTypes: true });
+    
+    webFolder.forEach(folder => {
         if (folder.isDirectory()) {
-            app.get(`/${folder.name}`, (req, res) => {
-                servePage(folder.name, res);
-            });
-
-            app.get(`/${folder.name}/content.html`, (req, res) => {
-                servePage(folder.name, res);
-            });
-
-            app.get(`/${folder.name}/head.html`, (req, res) => {
-                servePage(folder.name, res);
-            });
+            app.get(`/${folder.name}`, (req, res) => servePage(folder.name, res));
+            app.get(`/${folder.name}/index.html`, (req, res) => res.redirect(`/${folder.name}`));
+            app.get(`/${folder.name}/content.html`, (req, res) => res.redirect("/404"));
+            app.get(`/${folder.name}/head.html`, (req, res) => res.redirect("/404"));
         }
     });
-});
+} catch (error) {
+    console.error("Error reading web directory:", error);
+    return;
+}
 
 app.get("/", (req, res) => res.redirect("/home"));
 app.get("/index.html", (req, res) => res.redirect("/home"));
 
 app.use(express.static(path.join(__dirname, "web")));
+app.use((req, res) => res.redirect("/404"));
 
 app.listen(PORT, () => console.log(`Server is running on http://localhost:${PORT}`));

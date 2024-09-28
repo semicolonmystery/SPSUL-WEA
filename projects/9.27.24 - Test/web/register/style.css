@@ -2,7 +2,6 @@
     width: 100%;
     max-width: 800px;
     margin: 0 auto;
-    margin-top: 50px;
     padding: 20px;
     background-color: rgb(65, 65, 65);
     backdrop-filter: blur(8px);
@@ -26,8 +25,7 @@
     color: #ffffff;
 }
 
-.form-section input[type="email"],
-.form-section input[type="password"] {
+.form-section input {
     width: 100%;
     padding: 10px;
     margin-bottom: 15px;
@@ -38,7 +36,7 @@
     color: #d4d4d4;
 }
 
-.form-section input[type="submit"] {
+.form-section button {
     width: 100%;
     padding: 10px;
     background-color: #11c700;
@@ -49,7 +47,13 @@
     cursor: pointer;
 }
 
-.form-section input[type="submit"]:hover {
+.form-section button:hover {
     background-color: #d4b54d;
     transition: 0.3s;
+}
+
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-bottom: 20px;
 }

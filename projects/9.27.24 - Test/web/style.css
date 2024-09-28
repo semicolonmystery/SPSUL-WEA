@@ -3,8 +3,9 @@
 }
 
 html, body {
-    margin: 0;
     height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
 }
 
 body {
@@ -14,14 +15,27 @@ body {
 }
 
 .navbar {
-    display: block;
+    height: 60px;
     background-color: rgb(77, 77, 77);
     width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.navbar ul {
+.navbar-toggle {
+    display: none;
+    cursor: pointer;
+    height: 40px;
+    width: auto;
+    margin-left: 15px;
+}
+
+.navbar-items {
     display: flex;
-    flex-direction: row;
     justify-content: center;
     gap: 10px;
     margin: 0;
@@ -29,11 +43,8 @@ body {
     list-style: none;
 }
 
-.navbar li {
-    display: inline;
-}
-
 .navbar a {
+    width: 100%;
     display: inline-block;
     padding: 10px 15px;
     background-color: rgb(100, 100, 100);
@@ -49,7 +60,8 @@ body {
 
 .content {
     flex-grow: 1;
-    margin-top: 20px;
+    margin-top: 60px;
+    padding: 40px;
     color: white;
     text-align: center;
 }
@@ -59,5 +71,61 @@ body {
     background-color: rgb(77, 77, 77);
     color: white;
     text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
+    min-height: 40px;
+}
+
+.nothing {
+    visibility: hidden;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgb(0, 0, 0);
+    opacity: 0;
+    transition: linear opacity 0.5s;
+    z-index: 999;
+}
+
+@media (max-width: 600px) {
+    .navbar {
+        justify-content: flex-start;
+    }
+    .navbar-items {
+        visibility: hidden;
+        opacity: 0.25;
+        transition: linear opacity 0.5s;
+        flex-direction: column;
+        align-items: center;
+        position: absolute;
+        top: 61px;
+        left: 0;
+        width: 100%;;
+        background-color: rgb(77, 77, 77);
+        padding: 10px 0;
+    }
+    .navbar-items li {
+        display: flex;
+        width: 100%;
+        padding: 0 10px 0 10px;
+        justify-content: center;
+    }
+
+    .navbar-items.active {
+        visibility: visible;
+        opacity: 1;
+    }
+
+    .nothing.active {
+        visibility: visible;
+        opacity: 0.9;
+    }
+
+    .navbar-toggle {
+        display: block;
+    }
 }
